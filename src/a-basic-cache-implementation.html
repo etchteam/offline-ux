@@ -95,7 +95,7 @@ layout: default.hbs
   </code>
 </pre>
 <p>
-  The service workers "fetch" event can be used to hijack any network requests. Tis can be used to serve a response from the cache instead of from the network... 
+  The service workers "fetch" event can be used to hijack any network requests. This can be used to serve a response from the cache instead of from the network...
 </p>
 <pre class="language-js">
   <code class="language-js">
@@ -108,24 +108,19 @@ layout: default.hbs
     });
   </code>
 </pre>
-
-
-<br/><br/><br/><br/><br/><br/>
-<ul>
-  <li>
-    Browsers have a cache API
-  </li>
-  <li>
-    Service workers have an install event which is ideal for initial caching essential resources on first visit
-  </li>
-  <li>
-    The cache API was originally created for service workers but can also be used standalone
-  </li>
-  <li>
-    Cache storage is limited, it will differ depending on device and storage conditions. 
-  </li>
-  <li>
-    It's recommended to only store the network resources necessary to load your app while offline in the Cache. For all other data, use IndexedDB (with a promises wrapper).
-  </li>
-</ul>
-
+<p>
+  <code class="language-js">`caches.match`</code> will identify if there's any matching items in the cache for the current request. When there is the <code class="language-js">`response`</code> will discard the network request entirely, using the cache as priority instead.
+</p>
+<p>
+  After a successful install a connection will no longer be required to view the page. All the dependant items will be served from the cache instead.
+</p>
+<h2>Next steps</h2>
+<p>
+  As exciting as this is, the cache implementation still needs a lot of work, it's flaws are revealed as soon as the content updates where it will continue to serve the cached content.
+</p>
+<p>
+  Realistically a full caching strategy taking into account the content and life-cycle of production software needs to be taken into account. 
+</p>
+<p>
+  This goes beyond a basic cache implementation, the network needs to <i>enhance</i> the stale contents of the cache to build off this implementation. 
+</p>

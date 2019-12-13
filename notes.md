@@ -9,6 +9,7 @@
 - "perhaps server-side rendering should not be viewed as a fallback but client-side rendering should be looked at as an enhancement." - Jeremy Keith
 - Probably need difficulty and reading length indicators
 - Probably helpful to have can i use stats for popular browsers
+- Google handles offline searches like: https://etch.slack.com/archives/CRBQC3WNP/p1576269769001000
 
 ## Achieving the ultimate offline experience
 - While online, downloaded network requests and assets are cached depending on what the user has viewed
