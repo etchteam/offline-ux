@@ -1,0 +1,12 @@
+<h1>We're Online!</h1>
+
+<script>
+  console.log('scriptin');
+  if ('serviceWorker' in navigator) {
+    console.log('service workerin');
+    window.addEventListener('load', () => {
+      console.log('loadederin');
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
+</script>

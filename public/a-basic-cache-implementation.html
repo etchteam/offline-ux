@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Offline</title>
+    <meta name="description" content>
+
+    <!--
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    -->
+
+    <!--
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="">
+    <meta property="twitter:creator" content="@danwebbbb">
+    -->
+
+    <link rel="stylesheet" href="/styles/base.css">
+  </head>
+  <body>
+    <main>
+      
+<a href="/">&#x2190; Back to all articles</a>
+
+<h1>A basic cache implementation</h1>
+
+<p>
+  <i>Add can i use stats and links to source code</i>
+</p>
+
+<p>
+  Even the most basic cache implementation can simultaneously improve performance and enable offline use of any website.
+</p>
+<p>
+  If you haven&apos;t had the chance to play with the browser cache API this is a good place to start.
+</p>
+
+<h2>Create a service worker</h2>
+<p>
+  The cache API that comes with browsers was built to be used together with service workers.
+</p>
+<p>
+  Event handlers can be utilised in service workers which allow us to hook into key life cycle events such as when the website is viewed for the first time or whenever a network request occurs.
+</p>
+<p>
+  Creating a service worker is as simple as adding a new Javascript file to your project. We&apos;ll call it <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">service-worker.js</span><span class="token template-punctuation string">`</span></span></code> but it can be called anything.
+</p>
+<p>
+  Then add the following to your HTML to register the <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">service-worker.js</span><span class="token template-punctuation string">`</span></span></code> file as a service worker whenever the page loads.
+</p>
+<pre class="language-js">
+  <code class="language-js">
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">&apos;serviceWorker&apos;</span> <span class="token keyword">in</span> navigator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;load&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        navigator<span class="token punctuation">.</span>serviceWorker<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token string">&apos;/service-worker.js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  </code>
+</pre>
+<p>
+  If you reload the page, open dev tools and navigate to the application tab you should now see the service worker gets registered.
+</p>
+<img src="/assets/a-basic-cache-implementation/service-worker-registered.png" alt="Service worker registered">
+<div style="margin-top:1em;padding:1em;background:#f3f3f3;">
+  <strong>Remember:</strong> Service workers require a <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>, make sure view the page over HTTPS or localhost.
+</div>
+
+<h2>Adding to the cache</h2>
+<img src="/assets/a-basic-cache-implementation/basic-cache-example.png" alt="A basic cache example">
+<p>
+  Now, code can be added to the <code>service-worker.js</code> to create the cache.
+</p>
+<p>
+  The service workers &quot;install&quot; event can be used to initiate the cache, it&apos;ll be called once per service worker installation. Here&apos;s what the install event handler looks like...
+</p>
+<pre class="language-js">
+  <code class="language-js">
+    self<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;install&apos;</span><span class="token punctuation">,</span> <span class="token parameter">event</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  </code>
+</pre>
+<p>
+  Let&apos;s fill the cache with the html, css and image used in the example webpage above...
+</p>
+<pre class="language-js">
+  <code class="language-js">
+    self<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;install&apos;</span><span class="token punctuation">,</span> <span class="token parameter">event</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> image <span class="token operator">=</span> <span class="token string">&apos;https://images.unsplash.com/photo-1572627690516-b531677b926f?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=802&amp;q=80&apos;</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> thingsToCache <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;index.html&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;styles.css&apos;</span><span class="token punctuation">,</span> image<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> cached <span class="token operator">=</span> caches<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">&apos;cache&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">cache</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        cache<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>thingsToCache<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      event<span class="token punctuation">.</span><span class="token function">waitUntil</span><span class="token punctuation">(</span>cached<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  </code>
+</pre>
+
+
+<br><br><br><br><br><br>
+<ul>
+  <li>
+    Browsers have a cache API
+  </li>
+  <li>
+    Service workers have an install event which is ideal for initial caching essential resources on first visit
+  </li>
+  <li>
+    The cache API was originally created for service workers but can also be used standalone
+  </li>
+  <li>
+    Cache storage is limited, it will differ depending on device and storage conditions. 
+  </li>
+  <li>
+    It&apos;s recommended to only store the network resources necessary to load your app while offline in the Cache. For all other data, use IndexedDB (with a promises wrapper).
+  </li>
+</ul>
+
+
+    </main>
+  </body>
+</html>

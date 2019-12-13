@@ -1,0 +1,98 @@
+---
+layout: default.hbs
+---
+
+<a href="/">&larr; Back to all articles</a>
+
+<h1>A basic cache implementation</h1>
+
+<p>
+  <i>Add can i use stats and links to source code</i>
+</p>
+
+<p>
+  Even the most basic cache implementation can simultaneously improve performance and enable offline use of any website.
+</p>
+<p>
+  If you haven't had the chance to play with the browser cache API this is a good place to start.
+</p>
+
+<h2>Create a service worker</h2>
+<p>
+  The cache API that comes with browsers was built to be used together with service workers.
+</p>
+<p>
+  Event handlers can be utilised in service workers which allow us to hook into key life cycle events such as when the website is viewed for the first time or whenever a network request occurs.
+</p>
+<p>
+  Creating a service worker is as simple as adding a new Javascript file to your project. We'll call it <code class="language-js">`service-worker.js`</code> but it can be called anything.
+</p>
+<p>
+  Then add the following to your HTML to register the <code class="language-js">`service-worker.js`</code> file as a service worker whenever the page loads.
+</p>
+<pre>
+  <code class="language-js">
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </code>
+</pre>
+<p>
+  If you reload the page, open dev tools and navigate to the application tab you should now see the service worker gets registered.
+</p>
+<img src="/assets/a-basic-cache-implementation/service-worker-registered.png" alt="Service worker registered" />
+<div style="margin-top:1em;padding:1em;background:#f3f3f3;">
+  <strong>Remember:</strong> Service workers require a <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>, make sure view the page over HTTPS or localhost.
+</div>
+
+<h2>Adding to the cache</h2>
+<img src="/assets/a-basic-cache-implementation/basic-cache-example.png" alt="A basic cache example" />
+<p>
+  Now, code can be added to the <code>service-worker.js</code> to create the cache.
+</p>
+<p>
+  The service workers "install" event can be used to initiate the cache, it'll be called once per service worker installation. Here's what the install event handler looks like...
+</p>
+<pre>
+  <code class="language-js">
+    self.addEventListener('install', event => {});
+  </code>
+</pre>
+<p>
+  Let's fill the cache with the html, css and image used in the example webpage above...
+</p>
+<pre>
+  <code class="language-js">
+    self.addEventListener('install', event => {
+      const image = 'https://images.unsplash.com/photo-1572627690516-b531677b926f?ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80';
+      const thingsToCache = ['/', 'index.html', 'styles.css', image];
+      const cached = caches.open('cache').then(cache => {
+        cache.addAll(thingsToCache);
+      });
+      event.waitUntil(cached);
+    });
+  </code>
+</pre>
+
+
+<br/><br/><br/><br/><br/><br/>
+<ul>
+  <li>
+    Browsers have a cache API
+  </li>
+  <li>
+    Service workers have an install event which is ideal for initial caching essential resources on first visit
+  </li>
+  <li>
+    The cache API was originally created for service workers but can also be used standalone
+  </li>
+  <li>
+    Cache storage is limited, it will differ depending on device and storage conditions. 
+  </li>
+  <li>
+    It's recommended to only store the network resources necessary to load your app while offline in the Cache. For all other data, use IndexedDB (with a promises wrapper).
+  </li>
+</ul>
+

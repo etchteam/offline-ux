@@ -1,0 +1,15 @@
+{
+  "name": "basic-cache",
+  "version": "1.0.0",
+  "description": "",
+  "main": "service-worker.js",
+  "scripts": {
+    "start": "serve"
+  },
+  "keywords": [],
+  "author": "Dan Webb <mail@danwebb.co> (https://danwebb.co)",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "11.2.0"
+  }
+}

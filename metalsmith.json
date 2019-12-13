@@ -1,0 +1,11 @@
+{
+  "source": "src",
+  "destination": "public",
+  "clean": true,
+  "plugins": {
+    "metalsmith-layouts": {
+      "directory": "src/layouts"
+    },
+    "metalsmith-prism": {}
+  }
+}
