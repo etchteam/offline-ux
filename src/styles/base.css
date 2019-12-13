@@ -71,7 +71,7 @@ code[class*='language-'] {
 }
 
 .token.string {
-  color: #666;
+  color: #555;
 }
 
 .token.function, .token.tag, .token.class-name, .token.number {

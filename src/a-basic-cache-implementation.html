@@ -47,7 +47,7 @@ layout: default.hbs
   <strong>Remember:</strong> Service workers require a <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>, make sure view the page over HTTPS or localhost.
 </div>
 
-<h2>Adding to the cache</h2>
+<h2>Add to the cache</h2>
 <img src="/assets/a-basic-cache-implementation/basic-cache-example.png" alt="A basic cache example" />
 <p>
   Now, code can be added to the <code>service-worker.js</code> to create the cache.
@@ -61,7 +61,7 @@ layout: default.hbs
   </code>
 </pre>
 <p>
-  Let's fill the cache with the html, css and image used in the example webpage above...
+  This basic cache will contain the html, css and image used in the example webpage above. Adding these items to the cache can be achieved using <code class="language-js">`cache.addAll`</code> like so...
 </p>
 <pre>
   <code class="language-js">
@@ -72,6 +72,31 @@ layout: default.hbs
         cache.addAll(thingsToCache);
       });
       event.waitUntil(cached);
+    });
+  </code>
+</pre>
+<p>
+  This will <code class="language-js">`open`</code> a cache called "cache" and <code class="language-js">`addAll`</code> the paths it will need to fetch then store.  
+</p>
+<p>
+  In this case <code class="language-js">`event.waitUntil`</code> will hold our service worker in the "installing" phase until we have finished caching. If this fails the service worker won't install and will be discarded instead.
+</p>
+<p>
+  The dependant files and URLs are now in the cache, but loading this page offline will still use the network and the assets won't load. An extra step is needed to tell the browser when to use the cache.
+</p>
+
+<h2>Use the cache</h2>
+<p>
+  In the short intro to service workers above the super power of being able to watch "whenever a network request occurs" is mentioned, this is the key to replacing network requests with the contents of the cache.
+</p>
+<pre class="language-js">
+  <code class="language-js">
+    self.addEventListener('fetch', event => {
+      const response = caches.match(event.request)
+        .then(cachedResponse => {
+          return cachedResponse ? cachedResponse : fetch(event.request);
+        });
+      event.respondWith(response);
     });
   </code>
 </pre>

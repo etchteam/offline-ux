@@ -81,7 +81,7 @@
   <strong>Remember:</strong> Service workers require a <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>, make sure view the page over HTTPS or localhost.
 </div>
 
-<h2>Adding to the cache</h2>
+<h2>Add to the cache</h2>
 <img src="/assets/a-basic-cache-implementation/basic-cache-example.png" alt="A basic cache example">
 <p>
   Now, code can be added to the <code>service-worker.js</code> to create the cache.
@@ -95,7 +95,7 @@
   </code>
 </pre>
 <p>
-  Let&apos;s fill the cache with the html, css and image used in the example webpage above...
+  This basic cache will contain the html, css and image used in the example webpage above. Adding these items to the cache can be achieved using <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">cache.addAll</span><span class="token template-punctuation string">`</span></span></code> like so...
 </p>
 <pre class="language-js">
   <code class="language-js">
@@ -106,6 +106,31 @@
         cache<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>thingsToCache<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       event<span class="token punctuation">.</span><span class="token function">waitUntil</span><span class="token punctuation">(</span>cached<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  </code>
+</pre>
+<p>
+  This will <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">open</span><span class="token template-punctuation string">`</span></span></code> a cache called &quot;cache&quot; and <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">addAll</span><span class="token template-punctuation string">`</span></span></code> the paths it will need to fetch then store.  
+</p>
+<p>
+  In this case <code class="language-js"><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">event.waitUntil</span><span class="token template-punctuation string">`</span></span></code> will hold our service worker in the &quot;installing&quot; phase until we have finished caching. If this fails the service worker won&apos;t install and will be discarded instead.
+</p>
+<p>
+  The dependant files and URLs are now in the cache, but loading this page offline will still use the network and the assets won&apos;t load. An extra step is needed to tell the browser when to use the cache.
+</p>
+
+<h2>Use the cache</h2>
+<p>
+  In the short intro to service workers above the super power of being able to watch &quot;whenever a network request occurs&quot; is mentioned, this is the key to replacing network requests with the contents of the cache.
+</p>
+<pre class="language-js">
+  <code class="language-js">
+    self<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;fetch&apos;</span><span class="token punctuation">,</span> <span class="token parameter">event</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> response <span class="token operator">=</span> caches<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>request<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">cachedResponse</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> cachedResponse <span class="token operator">?</span> cachedResponse <span class="token punctuation">:</span> <span class="token function">fetch</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      event<span class="token punctuation">.</span><span class="token function">respondWith</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   </code>
 </pre>
