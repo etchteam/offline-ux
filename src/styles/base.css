@@ -42,28 +42,35 @@ img {
   font-size: 1.2em;
 }
 
+code,
 code[class*='language-'],
 pre[class*='language-'] {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
   color: #010101;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
+  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
   font-size: 0.875em;
   line-height: 1.575em;
   tab-size: 4;
+  text-align: left;
   hyphens: none;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+}
+
+code {
+  background: #f3f3f3;
+  border-radius: 3px;
+  padding: 3px;
 }
 
 pre[class*='language-'] {
   overflow: auto;
-  padding: 0;
+  padding: 20px;
   margin: 0;
   border: 1px solid #eaeaea;
-}
-
-code[class*='language-'] {
-  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
 }
 
 .token.keyword {

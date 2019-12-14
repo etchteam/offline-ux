@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "spellcheck": "spellchecker -l en-GB -q -f README.md src/*.md -d dictionary.txt",
     "start": "npm-run-all --parallel watch serve",
     "watch": "watch \"npm run build\" src",
     "serve": "browser-sync start -s 'public' -f 'public'",
@@ -17,9 +18,11 @@
     "jstransformer-handlebars": "1.1.0",
     "metalsmith": "2.3.0",
     "metalsmith-layouts": "2.3.1",
+    "metalsmith-markdown": "1.1.0",
     "metalsmith-prism": "3.1.1",
     "npm-run-all": "4.1.5",
     "prism": "4.1.2",
+    "spellchecker-cli": "4.0.1",
     "watch": "1.0.2"
   }
 }
