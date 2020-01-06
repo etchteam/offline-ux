@@ -3,8 +3,10 @@ layout: default.hbs
 ---
 
 # Offline
+
 <p class="subtitle">
-  A deep dive on subjects surrounding progressive enhancement techniques and the achieving the best offline web experiences.
+  A deep dive on subjects surrounding progressive enhancement techniques and the
+  achieving the best offline web experiences.
 </p>
 
 <section class="articles">
@@ -87,6 +89,15 @@ layout: default.hbs
     </h2>
     <p class="articles__item-content">
       Could we allow users to opt into caching content up front? Let's have a deep dive to find out&hellip;
+    </p>
+  </div>
+
+  <div class="articles__item">
+    <h2 class="articles__item-title">
+      Offline around the web
+    </h2>
+    <p class="articles__item-content">
+      A review of the different offline strategies used by companies in 2020 and how they can be achieved&hellip;
     </p>
   </div>
 </section>

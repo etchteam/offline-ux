@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "spellcheck": "spellchecker -l en-GB -q -f README.md src/*.md -d dictionary.txt",
+    "mdlint": "markdownlint **/*.md --ignore node_modules",
     "start": "npm-run-all --parallel watch serve",
     "watch": "watch \"npm run build\" src",
     "serve": "browser-sync start -s 'public' -f 'public'",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "browser-sync": "2.26.7",
     "jstransformer-handlebars": "1.1.0",
+    "markdownlint-cli": "0.21.0",
     "metalsmith": "2.3.0",
     "metalsmith-layouts": "2.3.1",
     "metalsmith-markdown": "1.1.0",
