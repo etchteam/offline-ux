@@ -101,22 +101,3 @@ layout: default.hbs
     </p>
   </div>
 </section>
-
-<style>
-  .articles {
-    margin-top: 2em;
-  }
-
-  .articles__item {
-    padding-bottom: 1.5rem;
-  }
-
-  .articles__item-title {
-    font-size: 1.25em;
-    margin: 0 0 .1em 0;
-  }
-
-  .articles__item-content {
-    margin: 0;
-  }
-</style>

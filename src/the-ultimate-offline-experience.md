@@ -19,9 +19,7 @@ So, that sounds cool, but what does it looks like and how would it work?...
 
 ![A standard website](/assets/the-ultimate-offline-experience/standard-page.png)
 
-An undeniable truth of the web is that the websites content isn't going to be delivered to your computer without any network connection. This is why "offline first" could be misleading terminology.
-
-If there is no connection at all on first visit a custom offline screen which gracefully handles that situation should be displayed.
+An undeniable truth of the web is that the websites content isn't going to be delivered to your computer without any network connection. This is why "offline first" could be misleading terminology. If there is no connection at all on first visit then there is no choice but to fall back to the browsers default handling of the situation.
 
 But assuming there is a connection, the page will load and after some time the user will hopefully click through to an interesting link.
 
@@ -85,7 +83,7 @@ This might happen while the user is viewing the page or after they return to it.
 
 ## Do it!
 
-*Won't this be very hard?* I hear you, that's why this exists, it's a deep dive on subjects surrounding progressive enhancement techniques and the offline web experience.
+*Won't this be hard?* I hear you, that's why this exists, it's a deep dive on subjects surrounding progressive enhancement techniques and the offline web experience.
 
 The best techniques will be uncovered and a lot of them won't be as difficult as you might think to implement.
 

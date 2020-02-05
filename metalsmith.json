@@ -7,6 +7,20 @@
     "metalsmith-layouts": {
       "directory": "src/layouts"
     },
-    "metalsmith-prism": {}
+    "metalsmith-with-postcss": {
+      "plugins": {
+        "postcss-import": {},
+        "postcss-preset-env": {
+          "features": {
+            "nesting-rules": true
+          }
+        }
+      }
+    },
+    "metalsmith-prism": {},
+    "metalsmith-clean-css": {
+      "files": "src/styles/*.css"
+    },
+    "metalsmith-html-minifier": {}
   }
 }

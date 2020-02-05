@@ -1,5 +1,8 @@
 ---
-layout: default.hbs
+layout: article.hbs
+glitch:
+  url: https://glitch.com/embed/#!/embed/a-basic-cache?path=index.html&previewSize=0
+  title: a-basic-cache on Glitch
 ---
 
 [&larr; Back to all articles](/)
@@ -32,7 +35,7 @@ if ('serviceWorker' in navigator) {
 
 If you reload the page, open developer tools and navigate to the application tab you should now see the service worker gets registered.
 
-![Service worker registered](/assets/a-basic-cache-implementation/service-worker-registered.png" alt="Service worker registered)
+![Service worker registered](/assets/a-basic-cache-implementation/service-worker-registered.png)
 
 <div style="margin-top:1em;padding:1em;background:#f3f3f3;">
   <strong>Remember:</strong> Service workers require a <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>, make sure view the page over HTTPS or localhost.
@@ -96,6 +99,6 @@ After a successful install a connection will no longer be required to view the p
 
 As exciting as this is, the cache implementation still needs a lot of work, it's flaws are revealed as soon as the content updates where it will continue to serve the cached content.
 
-Realistically a full caching strategy taking into account the content and life-cycle of production software needs to be taken into account. 
+Realistically a full caching strategy taking into account the content and life-cycle of production software will be needed. 
 
-This goes beyond a basic cache implementation, the network needs to *enhance* the stale contents of the cache to build off this implementation. 
+This goes beyond a basic cache implementation, the network needs to *enhance* the stale contents of the cache to build off this implementation.

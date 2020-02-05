@@ -1,0 +1,25 @@
+:root {
+  --max-content-width: 30em;
+
+  --color-black: #101010;
+  --color-azuri: #067df7;
+  --color-purple: #be27dc;
+  --color-body: #333;
+  --color-emperor: #555;
+  --color-mercury: #eaeaea;
+  --color-concrete: #f3f3f3;
+
+  --shadow: 0 2px 8px 2px rgba(0, 0, 0, .075);
+  --shadow-subtle: 0 2px 8px 2px rgba(0, 0, 0, .025);
+
+  --space-xs: .25rem;
+  --space-sm: .5rem;
+  --space: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  --size-sm: .75em;
+  --size: 1em;
+  --size-lg: 1.25em;
+  --size-xl: 1.75em;
+}

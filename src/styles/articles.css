@@ -1,0 +1,16 @@
+.articles {
+  margin-top: var(--space-lg);
+
+  & .articles__item {
+    padding-bottom: calc(var(--space) * 1.5);
+  }
+
+  & .articles__item-title {
+    font-size: var(--size-lg);
+    margin: 0 0 .1em 0;
+  }
+
+  & .articles__item-content {
+    margin: 0;
+  }
+}
