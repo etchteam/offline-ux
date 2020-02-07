@@ -13,7 +13,7 @@ initial page load.
 ## Try it out
 
 - **View App** then click
-**Fullscreen** <img src="https://files-obmdakqyu.now.sh/fullscreen.svg" style="display:inline;" alt="fullscreen" />
+**Fullscreen** ![fullscreen](https://files-obmdakqyu.now.sh/fullscreen.svg)
 - Go **offline** and reload the page to see the image loaded from the cache. No
 connection required 💪
 
