@@ -10,7 +10,13 @@ This experiment is part of the [offline project](https://offline.etch.now.sh/).
 A basic cache is implemented using `service-worker.js` which stores the image on
 initial page load.
 
-Click `View App`, go **offline** and reload the page to see the image loaded
-from the cache. No connection required 💪
+## Try it out
+
+- **View App** then click
+**Fullscreen** ![fullscreen](https://files-obmdakqyu.now.sh/fullscreen.svg)
+- Go **offline** and reload the page to see the image loaded from the cache. No
+connection required 💪
+
+---
 
 *Imported from Github etchteam/offline:/experiments/basic-cache/*
