@@ -6,15 +6,26 @@ layout: default.hbs
 
 # A basic cache implementation
 
-*Add can i use stats and links to source code*
-
 Even the most basic cache implementation can simultaneously improve performance
 and enable offline use of any website.
 
-If you haven't had the chance to play with the browser cache API this is a good
-place to start.
+Let's experiment with caching by seeing how all the content on the webpage shown
+below can be cached. If you haven't had the chance to play with the browser
+cache API this is a good place to start.
 
----
+![A basic cache example](/assets/a-basic-cache-implementation/basic-cache-example.png)
+
+<a href="https://a-basic-cache.glitch.me">
+  view app
+</a>
+&nbsp; | &nbsp;
+<a href="https://glitch.com/edit/#!/a-basic-cache">
+  view code
+</a>
+&nbsp; | &nbsp;
+<a href="https://caniuse.com/#search=caches">
+  all major browsers except ios safari and ie
+</a>
 
 ## Creating a service worker
 
@@ -51,8 +62,6 @@ navigate to the application tab, it would show that the service worker gets regi
 </div>
 
 ## Adding to the cache
-
-![A basic cache example](/assets/a-basic-cache-implementation/basic-cache-example.png)
 
 Now, code can be added to the `service-worker.js` to create the cache!
 
