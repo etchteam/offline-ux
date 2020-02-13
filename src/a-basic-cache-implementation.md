@@ -9,9 +9,8 @@ layout: default.hbs
 Even the most basic cache implementation can simultaneously improve performance
 and enable offline use of any website.
 
-Let's experiment with caching by seeing how all the content on the webpage shown
-below can be viewed without any network connection. If you haven't had the chance
-to play with the browser cache API this is a good place to start.
+Let's start experimenting with caching by seeing how all the content on the
+webpage shown below can be viewed without any network connection.
 
 ![A basic cache example](/assets/a-basic-cache-implementation/basic-cache-example.png)
 
