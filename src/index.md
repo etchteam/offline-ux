@@ -2,7 +2,7 @@
 layout: default.hbs
 ---
 
-# Offline
+# Offline User Experience
 
 <p class="subtitle">
   A deep dive on subjects surrounding progressive enhancement techniques and the
