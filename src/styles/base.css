@@ -22,8 +22,16 @@ h1 {
   font-size: var(--size-xl);
 }
 
+h2 {
+  margin-top: var(--space-lg);
+}
+
 p, ul {
   color: var(--color-body);
+}
+
+h2 + p {
+  margin-top: var(--space-sm);
 }
 
 a {

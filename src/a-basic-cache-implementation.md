@@ -99,7 +99,7 @@ The dependant files and URLs are now in the cache 🎉...But loading this page o
 still uses the network and the assets won't load. An extra step is needed to
 tell the browser when it should use the cache.
 
-## Use the cache
+## Using the cache
 
 This is where the service worker super power of being able to watch "whenever a network
 request occurs" comes in handy, this is the key to replacing network requests
