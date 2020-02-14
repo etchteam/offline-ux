@@ -9,6 +9,11 @@ layout: default.hbs
   achieving the best offline web experiences.
 </p>
 
+<div class="callout">
+  <strong>Beta notice:</strong> This project is in active development,
+  <a href="mailto:ask@etch.co">Let us know</a><br/> if you're interested.
+</div>
+
 <section class="articles">
   <div class="articles__item">
     <h2 class="articles__item-title">
@@ -22,7 +27,8 @@ layout: default.hbs
       A basic cache implementation
     </h2>
     <p class="articles__item-content">
-      Even the most basic cache implementation can simultaneously improve performance and enable offline use of any website&hellip;
+      Even the most basic cache implementation can simultaneously improve
+      performance and enable offline use of any website&hellip;
     </p>
     <a href="/a-basic-cache-implementation.html">Read &rarr;</a>
   </div>
@@ -32,7 +38,8 @@ layout: default.hbs
       Caching content
     </h2>
     <p class="articles__item-content">
-      Deliver content without a network connection and improve performance by utilizing the cache&hellip;
+      Deliver content without a network connection and improve performance by
+      utilizing the cache&hellip;
     </p>
   </div>
 
@@ -41,9 +48,9 @@ layout: default.hbs
       Show a custom offline page
     </h2>
     <p class="articles__item-content">
-      Display a custom branded offline webpage when users are
-      offline...
+      Display a custom branded offline webpage when users are offline&hellip;
     </p>
+    <a href="/custom-offline-page.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
@@ -88,7 +95,8 @@ layout: default.hbs
       Adding a click to install button
     </h2>
     <p class="articles__item-content">
-      Could we allow users to opt into caching content up front? Let's have a deep dive to find out&hellip;
+      Could we allow users to opt into caching content up front? Let's have a
+      deep dive to find out&hellip;
     </p>
   </div>
 
@@ -97,7 +105,8 @@ layout: default.hbs
       Offline around the web
     </h2>
     <p class="articles__item-content">
-      A review of the different offline strategies used by companies in 2020 and how they can be achieved&hellip;
+      A review of the different offline strategies used by companies in 2020 and
+      how they can be achieved&hellip;
     </p>
   </div>
 </section>

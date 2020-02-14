@@ -1,0 +1,5 @@
+.callout {
+  margin-top: var(--space);
+  padding: var(--space);
+  background: var(--color-concrete);
+}

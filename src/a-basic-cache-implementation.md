@@ -54,7 +54,7 @@ navigate to the application tab, it would show that the service worker gets regi
 
 ![Service worker registered](/assets/a-basic-cache-implementation/service-worker-registered.png)
 
-<div style="margin-top:1em;padding:1em;background:#f3f3f3;">
+<div class="callout">
   <strong>Remember:</strong> Service workers require a
   <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>,
   make sure view the page over HTTPS or localhost.
