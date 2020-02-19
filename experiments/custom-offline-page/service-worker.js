@@ -1,23 +1,30 @@
-const cacheName = 'offline';
+const cacheName = 'offlinePage';
 const offlineUrl = 'offline.html';
 
-self.addEventListener('install', async () => {
-  const offlinePage = new Request(offlineUrl, {cache: 'reload'});
+const cacheOfflinePage = async () => {
   const cache = await caches.open(cacheName);
-  return cache.add(offlinePage);
+  return cache.add(offlineUrl);
+};
+
+const getOfflinePage = async () => {
+  const cache = await caches.open(cacheName);
+  const cachedResponse = await cache.match(offlineUrl);
+  return cachedResponse;
+};
+
+self.addEventListener('install', async event => {
+  self.skipWaiting();
+  event.waitUntil(cacheOfflinePage());
 });
 
-self.addEventListener('fetch', async event => {
+self.addEventListener('fetch', event => {
   if (event.request.mode !== 'navigate') {
     return;
   }
 
   try {
-    const response = fetch(event.request);
-    event.respondWith(response);
+    event.respondWith(fetch(event.request));
   } catch (err) {
-    const cache = await caches.open(cacheName);
-    const response = await cache.match(offlineUrl);
-    event.respondWith(response);
+    event.respondWith(getOfflinePage());
   }
 });
