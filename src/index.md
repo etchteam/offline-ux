@@ -74,24 +74,6 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      Why optimise for offline anyway?
-    </h2>
-    <p class="articles__item-content">
-      In an always online future, why go to all this effort to support offline users&hellip;
-    </p>
-  </div>
-
-  <div class="articles__item">
-    <h2 class="articles__item-title">
-      The offline app life cycle
-    </h2>
-    <p class="articles__item-content">
-      The browsers journey from first visit to a complete offline experience&hellip;
-    </p>
-  </div>
-
-  <div class="articles__item">
-    <h2 class="articles__item-title">
       Adding a click to install button
     </h2>
     <p class="articles__item-content">
@@ -102,11 +84,7 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      Offline around the web
+      Getting analytics to work offline
     </h2>
-    <p class="articles__item-content">
-      A review of the different offline strategies used by companies in 2020 and
-      how they can be achieved&hellip;
-    </p>
   </div>
 </section>

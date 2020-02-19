@@ -24,3 +24,4 @@ offline experience is going to be out of budget.
 - keep it current
 - display any blog entries you’ve added to the cache
 - display part of the app shell so it looks like the user is still in the app
+- What if we made our offline page so useful that users wanted to navigate to it?

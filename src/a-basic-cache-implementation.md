@@ -77,17 +77,16 @@ page above. Adding these items to the cache can be achieved using `cache.addAll`
 like so...
 
 ```javascript
-self.addEventListener('install', event => {
+const cacheName = 'myCache';
+self.addEventListener('install', async () => {
   const image = 'https://images.unsplash.com/photo-1572627690516-b531677b926f?ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80';
   const thingsToCache = ['/', 'index.html', 'styles.css', image];
-  const cached = caches.open('cache').then(cache => {
-    cache.addAll(thingsToCache);
-  });
-  event.waitUntil(cached);
+  const cache = await caches.open(cacheName);
+  return cache.addAll(thingsToCache);
 });
 ```
 
-This will `open` a cache called "cache" and `addAll` the paths inside
+This will `open` a cache called "myCache" and `addAll` the paths inside
 `thingsToCache` to it. The cache will go off in background to fetch then
 store each path.
 
@@ -110,16 +109,14 @@ In this case, it's used to serve a response from the cache instead of from
 the network...
 
 ```javascript
-self.addEventListener('fetch', event => {
-  const response = caches.match(event.request)
-    .then(cachedResponse => {
-      return cachedResponse ? cachedResponse : fetch(event.request);
-    });
-  event.respondWith(response);
+self.addEventListener('fetch', async event => {
+  const cache = await caches.open(cacheName);
+  const response = await cache.match(event.request);
+  event.respondWith(response || fetch(event.request));
 });
 ```
 
-`caches.match` will identify if there's any matching items in the cache for the
+`cache.match` will identify if there's any matching items in the cache for the
 current request. The promise it returns will either contain the cached item or
 `undefined` if there was nothing cached for the current request.
 
