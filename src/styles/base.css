@@ -57,7 +57,14 @@ img {
   font-size: var(--size-lg);
 }
 
-code,
+code {
+  color: var(--color-razzmatazz);
+  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  font-size: 0.875em;
+  line-height: 1.575em;
+  padding: 0 .25em;
+}
+
 code[class*='language-'],
 pre[class*='language-'] {
   background: transparent;
@@ -91,5 +98,5 @@ pre[class*='language-'] {
 }
 
 .token.function, .token.tag, .token.class-name, .token.number {
-  color: var(--color-purple);
+  color: var(--color-razzmatazz);
 }

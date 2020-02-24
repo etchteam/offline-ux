@@ -2,4 +2,13 @@
   margin-top: var(--space);
   padding: var(--space);
   background: var(--color-concrete);
+
+  & p {
+    margin: 0;
+  }
+
+  & b,
+  & strong {
+    color: var(--color-black);
+  }
 }

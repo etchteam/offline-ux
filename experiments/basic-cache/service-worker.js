@@ -1,4 +1,4 @@
-const cacheName = 'cache';
+const cacheName = 'offline';
 const image = new Request('/image.jpeg', { cache: 'reload' });
 const thingsToCache = ['/', 'index.html', 'styles.css', image];
 
@@ -13,8 +13,7 @@ const getResponse = async request => {
   return cachedResponse || fetch(request);
 };
 
-self.addEventListener('install', async event => {
-  self.skipWaiting();
+self.addEventListener('install', event => {
   event.waitUntil(cacheResources());
 });
 

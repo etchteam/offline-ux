@@ -55,44 +55,64 @@ navigate to the application tab, it would show that the service worker gets regi
 ![Service worker registered](/assets/a-basic-cache-implementation/service-worker-registered.png)
 
 <div class="callout">
-  <strong>Remember:</strong> Service workers require a
+
+  **Remember:** Service workers require a
   <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>,
   make sure view the page over HTTPS or localhost.
+
 </div>
 
 ## Adding to the cache
 
 Now, code can be added to the `service-worker.js` to create the cache!
 
-Service workers have an "install" event which can be used to initiate the cache,
-it'll be called once per service worker installation. Here's what the install event
-handler looks like...
+To start with the cache API will need to be given...
+
+- Name: what we're going to call this cache
+- Location: where are the files that we want to cache
+
+This basic cache will be called "offline", it will contain the HTML, CSS and image
+used in the example web page above. For now these can be added as variables at
+the top of the file...
 
 ```javascript
-self.addEventListener('install', event => {});
+const cacheName = 'offline';
+const image = new Request('/image.jpeg', { cache: 'reload' });
+const thingsToCache = ['/', 'index.html', 'styles.css', image];
 ```
 
-This basic cache will contain the HTML, CSS and image used in the example web
-page above. Adding these items to the cache can be achieved using `cache.addAll`
-like so...
+Adding `{cache: 'reload'}` for `image` makes sure that the default browser HTTP
+cache isn't used when the browser requests this asset.
+
+Service workers have an "install" event which can be used to initiate the cache,
+it'll be called once per service worker installation, the perfect time to start
+adding to the cache...
 
 ```javascript
-const cacheName = 'myCache';
-self.addEventListener('install', async () => {
-  const image = 'https://images.unsplash.com/photo-1572627690516-b531677b926f?ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80';
-  const thingsToCache = ['/', 'index.html', 'styles.css', image];
+const cacheResources = async () => {
   const cache = await caches.open(cacheName);
   return cache.addAll(thingsToCache);
+};
+
+self.addEventListener('install', event => {
+  event.waitUntil(cacheResources());
 });
 ```
 
-This will `open` a cache called "myCache" and `addAll` the paths inside
-`thingsToCache` to it. The cache will go off in background to fetch then
-store each path.
+This will `open` the cache and `addAll` the paths inside `thingsToCache` to it.
+The cache will go off in the background to retrieve then store each path.
 
 In this case, `event.waitUntil` will hold our service worker in the "installing"
 phase until it has finished caching. If this fails the service worker won't
 install and will be discarded instead.
+
+<div class="callout">
+  
+  **Remember:** Service worker `event` methods like `event.waitUntil`
+  must be called synchronously as part of the event handler. Placing them inside
+  a promise or after an `await` will break things.
+
+</div>
 
 The dependant files and URLs are now in the cache 🎉...But loading this page offline
 still uses the network and the assets won't load. An extra step is needed to
@@ -100,31 +120,37 @@ tell the browser when it should use the cache.
 
 ## Using the cache
 
-This is where the service worker super power of being able to watch "whenever a network
-request occurs" comes in handy, this is the key to replacing network requests
-with the contents of the cache.
+This is where the service worker super power of being able to watch whenever a network
+request occurs comes in handy, this is the key to serving the contents from the cache
+instead of using network requests.
 
-The service workers "fetch" event can be used to hijack any network requests.
-In this case, it's used to serve a response from the cache instead of from
-the network...
+The service workers "fetch" event can be used to hijack any network requests...
 
 ```javascript
-self.addEventListener('fetch', async event => {
+const getResponse = async request => {
   const cache = await caches.open(cacheName);
-  const response = await cache.match(event.request);
-  event.respondWith(response || fetch(event.request));
+  const cachedResponse = await cache.match(request);
+  return cachedResponse || fetch(request);
+};
+
+self.addEventListener('fetch', event => {
+  event.respondWith(getResponse(event.request));
 });
 ```
 
-`cache.match` will identify if there's any matching items in the cache for the
-current request. The promise it returns will either contain the cached item or
-`undefined` if there was nothing cached for the current request.
+This starts by matching items in the cache against what's being fetched using
+a call to `cache.match` for every request. The promise it returns will either
+contain the cached item or `undefined` if there was nothing cached for the
+current request.
 
-When a match is found, `response` will contain the item directly from the cache
+When a match is found, `cachedResponse` will contain the item directly from the cache
 and avoid the network request entirely.
 
-So, a successful install of this web page will mean a connection will no longer
-be required. All the dependant items will be served from the cache instead.
+A successful install of this web page now means a connection is no longer required.
+Viewing the network requests in dev tools will show the dependant items served
+from the service worker instead.
+
+![Serving from the cache](/assets/a-basic-cache-implementation/service-worker-fetch.png)
 
 ## Next steps
 
