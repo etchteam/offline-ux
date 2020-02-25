@@ -38,15 +38,17 @@ We'll see why this is key for the cache implementation in a minute.
 For now, creating a service worker is as simple as adding a new Javascript file
 to your project. We'll call it `service-worker.js` but it can be called anything.
 
-To register the `service-worker.js` file a bit of extra JS is needed, most
-commonly this code is set up to be called whenever the page loads...
+To make the browser aware of the `service-worker.js` file it needs to be registered,
+most of the time this code is set up to be called whenever a page loads...
 
-```javascript
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js');
-  });
-}
+```html
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
+</script>
 ```
 
 After adding this code, if you were to reload the page, open developer tools and
