@@ -15,7 +15,7 @@ webpage shown below can be viewed without any network connection.
 ![A basic cache example](/assets/a-basic-cache-implementation/basic-cache-example.png)
 
 <a href="https://a-basic-cache.glitch.me">
-  view app
+  view demo
 </a>
 &nbsp; | &nbsp;
 <a href="https://glitch.com/edit/#!/a-basic-cache">

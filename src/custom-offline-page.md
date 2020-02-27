@@ -12,7 +12,19 @@ instead of the generic default web browser one.
 A custom offline page is a good fallback option on any project even if the full
 offline experience is going to be out of budget.
 
-![Generic offline page](/assets/custom-offline-page/offline.png)
+![Custom offline page](/assets/custom-offline-page/offline-page.jpg)
+
+<a href="https://custom-offline-page.glitch.me/">
+  view demo
+</a>
+&nbsp; | &nbsp;
+<a href="https://glitch.com/edit/#!/custom-offline-page">
+  view code
+</a>
+&nbsp; | &nbsp;
+<a href="https://caniuse.com/#search=caches">
+  all major browsers except ios safari and ie
+</a>
 
 - Why do it
 - How to technically do it
