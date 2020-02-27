@@ -4,10 +4,12 @@
   --color-black: #101010;
   --color-azuri: #067df7;
   --color-razzmatazz: #de0f77;
+  --color-purple: #be27dc;
   --color-body: #222;
   --color-emperor: #555;
   --color-mercury: #eaeaea;
   --color-concrete: #f3f3f3;
+  --color-white: #fff;
 
   --shadow: 0 2px 8px 2px rgba(0, 0, 0, .075);
   --shadow-subtle: 0 2px 8px 2px rgba(0, 0, 0, .025);

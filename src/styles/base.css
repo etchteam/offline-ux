@@ -1,9 +1,32 @@
+html {
+  background: var(--color-purple);
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
+  background: var(--color-white);
   color: var(--color-black);
   font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
   font-size: 18px;
   margin: 0;
   line-height: 1.3;
+}
+
+::selection {
+  color: var(--color-white);
+  background: var(--color-purple);
+}
+
+::-moz-selection {
+  color: var(--color-white);
+  background: var(--color-purple);
 }
 
 main {
