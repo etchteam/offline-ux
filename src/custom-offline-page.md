@@ -26,10 +26,14 @@ offline experience is going to be out of budget.
   all major browsers except ios safari and ie
 </a>
 
-- Why do it
-- How to technically do it
-- UX suggestions
-- Examples
+## How to serve a custom offline page
+
+<div class="callout">
+  
+  **Notice:** This assumes some knowledge of service workers and the cache API provided
+  in the [basic cache implementation article](/a-basic-cache-implementation.html).
+
+</div>
 
 ## UX Suggestions
 
@@ -37,3 +41,7 @@ offline experience is going to be out of budget.
 - display any blog entries you’ve added to the cache
 - display part of the app shell so it looks like the user is still in the app
 - What if we made our offline page so useful that users wanted to navigate to it?
+
+## Examples
+
+![Google search offline](/assets/custom-offline-page/google.jpg)
