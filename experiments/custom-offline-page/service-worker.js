@@ -14,8 +14,7 @@ const getPage = event => {
   });
 };
 
-self.addEventListener('install', async event => {
-  self.skipWaiting();
+self.addEventListener('install', event => {
   event.waitUntil(cacheOfflinePage());
 });
 
