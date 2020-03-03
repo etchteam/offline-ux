@@ -43,7 +43,7 @@ whilst fetching another webpage. This involves three steps:
 3. If the fetch fails, serve the cached offline page
 
 The service worker "install" event can be used to set up the cache, on install the
-`offline.html` file can be cached...
+`offline.html` file containing the custom offline page can be cached...
 
 ```javascript
 const cacheName = 'offlinePage';
@@ -59,7 +59,49 @@ self.addEventListener('install', event => {
 });
 ```
 
-Now our offline page is safely stored in the cache.
+This will make sure our offline page is safely stored in a cache called "offlinePage"
+when the website first loads. It's now ready to be used without requiring a network
+connection.
+
+The next step is "trying a fetch request"...
+
+```javascript
+const getPage = event => {
+  return fetch(event.request);
+};
+
+self.addEventListener('fetch', event => {
+  if (event.request.mode !== 'navigate') {
+    return;
+  }
+
+  event.respondWith(getPage(event));
+});
+```
+
+Every time any network request occurs the browser sends off a `fetch` request,
+including for any images or scripts. It's important that the implementation only
+serves the offline page when other pages are requested.
+
+This is accomplished here by checking `event.request.mode` which will be equal to
+`navigate` only when the request is for a HTML webpage.
+
+If `event.respondWith` is never called within the service workers fetch event handler
+the browser will carry out the request as normal. So if the `navigate` check fails
+it's safe to simply `return` and exit the function execution.
+
+Finally, a `catch` can be added on the request to react to any network failures by
+serving the custom offline page instead...
+
+```javascript
+const getPage = event => {
+  return fetch(event.request).catch(async () => {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(offlineUrl);
+    return cachedResponse;
+  });
+};
+```
 
 ## UX Suggestions
 

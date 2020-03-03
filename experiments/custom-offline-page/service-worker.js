@@ -9,7 +9,7 @@ const cacheOfflinePage = async () => {
 const getPage = event => {
   return fetch(event.request).catch(async () => {
     const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match('offline.html');
+    const cachedResponse = await cache.match(offlineUrl);
     return cachedResponse;
   });
 };
