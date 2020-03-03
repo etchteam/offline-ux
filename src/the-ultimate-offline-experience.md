@@ -6,7 +6,10 @@ layout: default.hbs
 
 # The ultimate offline experience
 
-This project was conceived out of a desire to create an offline experience for the web that felt natural, instead of clunky or non-existent.
+<p class="subtitle">
+  This project was conceived out of a desire to create an offline experience for
+  the web that felt natural, instead of clunky or non-existent.
+</p>
 
 The end result will benefit all users by improving performance through intelligent caching and progressive enhancement techniques. 
 

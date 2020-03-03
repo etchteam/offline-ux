@@ -6,8 +6,10 @@ layout: default.hbs
 
 # A basic cache implementation
 
-Even the most basic cache implementation can simultaneously improve performance
-and enable offline use of any website.
+<p class="subtitle">
+  Even the most basic cache implementation can simultaneously improve performance
+  and enable offline use of any website.
+</p>
 
 Let's start experimenting with caching by seeing how all the content on the
 webpage shown below can be viewed without any network connection.

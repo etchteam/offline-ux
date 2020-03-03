@@ -6,8 +6,10 @@ layout: default.hbs
 
 # Show a custom offline page
 
-Display a more engaging custom branded offline webpage when users move offline
-instead of the generic default web browser one.
+<p class="subtitle">
+  Display a more engaging custom branded offline webpage when users move offline
+  instead of the generic default web browser one.
+</p>
 
 A custom offline page is a good fallback option on any project even if the full
 offline experience is going to be out of budget.
