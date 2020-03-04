@@ -156,11 +156,28 @@ from the service worker instead.
 
 ![Serving from the cache](/assets/a-basic-cache-implementation/service-worker-fetch.png)
 
+## Keeping the cache up to date
+
+```javascript
+const cleanup = async () => {
+  const cacheNames = await caches.keys();
+  await Promise.all(cacheNames.map(name => (
+    name !== cacheName && caches.delete(name)
+  )));
+};
+
+self.addEventListener('activate', event => {
+  event.waitUntil(cleanup());
+  self.clients.claim();
+});
+```
+
 ## Next steps
 
 As exciting as this is, the cache implementation still needs a lot of work, it's
 flaws are revealed as soon as the content updates. It will continue to serve the
-cached content instead of the updated content.
+cached content instead of the updated content until someone manually updates the
+`cacheName`.
 
 Realistically caching one set of content isn't going to cut it, a full caching
 strategy taking into account real-world content and frequently evolving nature

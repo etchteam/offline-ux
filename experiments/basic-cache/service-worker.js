@@ -13,10 +13,22 @@ const getResponse = async request => {
   return cachedResponse || fetch(request);
 };
 
+const cleanup = async () => {
+  const cacheNames = await caches.keys();
+  await Promise.all(cacheNames.map(name => (
+    name !== cacheName && caches.delete(name)
+  )));
+};
+
 self.addEventListener('install', event => {
   event.waitUntil(cacheResources());
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(getResponse(event.request));
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(cleanup());
+  self.clients.claim();
 });
