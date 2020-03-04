@@ -158,6 +158,9 @@ from the service worker instead.
 
 ## Keeping the cache up to date
 
+In this implementation the `cacheName` variable is used when initially adding to
+the cache and serving contents of the cache with `caches.open(cacheName)`.
+
 ```javascript
 const cleanup = async () => {
   const cacheNames = await caches.keys();
@@ -171,6 +174,8 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 ```
+
+![Waiting to activate](/assets/a-basic-cache-implementation/waiting-to-activate.png)
 
 ## Next steps
 
