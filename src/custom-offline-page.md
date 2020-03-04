@@ -16,15 +16,15 @@ offline experience is going to be out of budget.
 
 ![Custom offline page](/assets/custom-offline-page/offline-page.jpg)
 
-<a href="https://custom-offline-page.glitch.me/">
+<a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">
   view demo
 </a>
 &nbsp; | &nbsp;
-<a href="https://glitch.com/edit/#!/custom-offline-page">
+<a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">
   view code
 </a>
 &nbsp; | &nbsp;
-<a href="https://caniuse.com/#search=caches">
+<a href="https://caniuse.com/#search=caches" target="_blank" rel="noopener noreferrer">
   all major browsers except ios safari and ie
 </a>
 
@@ -105,7 +105,24 @@ const getPage = event => {
 };
 ```
 
-## UX Suggestions
+The website will now serve the custom offline page based on if the user has a
+network connection. Take a look at <a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">the full working version of this code</a>
+or the demo <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">demo</a>
+to see the offline page in action.
+
+This is a basic implementation for a generic offline page but it opens up many more
+possibilities. In an actual website we can do better with minimal extra effort.
+
+## Maintaining context
+
+A go-to approach for optimising any app and providing better support for unreliable
+network connections in general is to keep a copy of the websites "shell" in the cache.
+
+Nearly all websites have a few consistent layout elements across all pages like a
+header, footer, maybe a page container or sidebar. If these elements are added to
+the cache they can be used to load the page layout instantly on repeat visits.
+
+
 
 - Easy mode: Branded offline page
   - display part of the app shell so it looks like the user is still in the app
