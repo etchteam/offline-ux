@@ -22,6 +22,7 @@ const cleanup = async () => {
 
 self.addEventListener('install', event => {
   event.waitUntil(cacheResources());
+  self.skipWaiting();
 });
 
 self.addEventListener('fetch', event => {
@@ -30,5 +31,4 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(cleanup());
-  self.clients.claim();
 });
