@@ -158,8 +158,40 @@ from the service worker instead.
 
 ## Keeping the cache up to date
 
-In this implementation the `cacheName` variable is used when initially adding to
-the cache and serving contents of the cache with `caches.open(cacheName)`.
+Currently, if a change is made to any of the cached files nothing will change on
+the webpage. The service worker will still serve the out of date content, it
+has no way of telling that there is newer versions of the cached files available.
+
+The `cacheName` variable is used when initially adding to the cache as well as
+serving contents of the cache with `caches.open(cacheName)`. So, updating the `cacheName`
+to something like "offline-v1" should cause a new cache to be set up with the up
+to date versions of the files.
+
+But updating `cacheName` still doesn't cause the content to change, frustrating!
+
+![Waiting to activate](/assets/a-basic-cache-implementation/waiting-to-activate.png)
+
+Upon further investigation, the application tab in dev tools is saying that a version
+of the service worker is "waiting to activate". This means the new service worker
+is installed and ready to go, but it won't activate until the previous service worker
+has become inactive. Only a hard refresh or closing the tab will make our new service
+worker become the active one.
+
+This is the default behaviour of service workers because in many cases immediately
+activating a new version of a service worker whilst a user is browsing could cause
+things to break. In this case though the new content should appear straight away,
+the waiting phase can be skipped by adding an extra line to the "install" event handler...
+
+```javascript
+self.addEventListener('install', event => {
+  event.waitUntil(cacheResources());
+  self.skipWaiting();
+});
+```
+
+The new content is now appearing from a new cache when `cacheName` is changed. But
+what happened to the old cache? It's dead but still lingering like a ghost that
+uses up data storage limits.
 
 ```javascript
 const cleanup = async () => {
@@ -171,18 +203,16 @@ const cleanup = async () => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(cleanup());
-  self.clients.claim();
 });
 ```
 
-![Waiting to activate](/assets/a-basic-cache-implementation/waiting-to-activate.png)
-
 ## Next steps
 
-As exciting as this is, the cache implementation still needs a lot of work, it's
-flaws are revealed as soon as the content updates. It will continue to serve the
-cached content instead of the updated content until someone manually updates the
-`cacheName`.
+As exciting as this is, the cache implementation still needs work, its flaws are
+revealed as soon as the content updates. It will continue to serve the cached
+content instead of the updated content until someone manually updates the `cacheName`.
+Even then, it would go off and create an entirely new cache for something as simple
+as a text change in one file.
 
 Realistically caching one set of content isn't going to cut it, a full caching
 strategy taking into account real-world content and frequently evolving nature
