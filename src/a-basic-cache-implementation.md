@@ -68,9 +68,8 @@ navigate to the application tab, it would show that the service worker gets regi
 
 ## Adding to the cache
 
-Now, code can be added to the `service-worker.js` to create the cache!
-
-To start with the cache API will need to be given...
+Now, code can be added to the `service-worker.js` to create the cache! To start
+with the cache API will need to be given...
 
 - Name: what we're going to call this cache
 - Location: where are the files that we want to cache
@@ -191,7 +190,9 @@ self.addEventListener('install', event => {
 
 The new content is now appearing from a new cache when `cacheName` is changed. But
 what happened to the old cache? It's dead but still lingering like a ghost that
-uses up data storage limits.
+gobbles up data storage limits.
+
+We should cleanup after ourselves and not leave unused caches lying around...
 
 ```javascript
 const cleanup = async () => {
@@ -205,6 +206,13 @@ self.addEventListener('activate', event => {
   event.waitUntil(cleanup());
 });
 ```
+
+This will delete all caches that have been created by this website which don't have
+the same name as the current `cacheName`.
+
+The "activate" event is a good place to put this, it'll be called once the service
+worker is installed and ready to go. The cleanup will happen in the background
+not interrupting anything else that's going on.
 
 ## Next steps
 
