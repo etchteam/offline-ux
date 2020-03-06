@@ -115,6 +115,8 @@ possibilities. In an actual website we can do better with minimal extra effort.
 
 ## Maintaining context
 
+![Offline page with shell](/assets/custom-offline-page/offline-with-shell.png)
+
 A go-to approach for optimising any app and providing better support for unreliable
 network connections in general is to keep a copy of the websites "shell" in the cache.
 
@@ -122,7 +124,7 @@ Nearly all websites have a few consistent layout elements across all pages like 
 header, footer, maybe a page container or sidebar. If these elements are added to
 the cache they can be used to load the page layout instantly on repeat visits.
 
-
+By including these elements on the custom offline page it maintains website context
 
 - Easy mode: Branded offline page
   - display part of the app shell so it looks like the user is still in the app
