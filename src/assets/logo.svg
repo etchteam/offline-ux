@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="226px" height="66px" viewBox="0 0 226 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>offline-logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="offline-logo" fill-rule="nonzero">
+            <rect id="Rectangle-path" fill="#333333" x="161" y="1" width="64" height="64"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="177" y="0" width="32" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="177" y="49" width="32" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="209" y="17" width="17" height="32"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="160" y="17" width="17" height="32"></rect>
+            <rect id="Rectangle-path" fill="#333333" x="81" y="1" width="64" height="64"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="97" y="0" width="32" height="49"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="129" y="49" width="17" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="80" y="49" width="17" height="17"></rect>
+            <rect id="Rectangle-path" fill="#333333" x="1" y="1" width="64" height="64"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="17" y="17" width="32" height="32"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="0" y="0" width="17" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="0" y="49" width="17" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="49" y="49" width="17" height="17"></rect>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="49" y="0" width="17" height="17"></rect>
+        </g>
+    </g>
+</svg>

@@ -72,7 +72,15 @@ ul > li {
 
 img {
   box-shadow: var(--shadow);
+  display: block;
   max-width: 100%;
+}
+
+.logo {
+  box-shadow: none;
+  margin-bottom: var(--space-lg);
+  height: auto;
+  width: 5em;
 }
 
 .subtitle {

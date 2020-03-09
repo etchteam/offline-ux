@@ -2,11 +2,9 @@
 layout: default.hbs
 ---
 
-# Offline User Experience
-
 <p class="subtitle">
-  A deep dive on subjects surrounding progressive enhancement techniques and the
-  achieving the best offline web experiences.
+  Offline User Experience is a deep dive on subjects surrounding progressive
+  enhancement techniques and the achieving the best offline web experiences.
 </p>
 
 <div class="callout">
