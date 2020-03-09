@@ -2,9 +2,9 @@
 layout: default.hbs
 ---
 
-[&larr; Back to all articles](/)
-
-# The ultimate offline experience
+<div class="article-header">
+  <h1>The ultimate offline experience</h1>
+</div>
 
 <p class="subtitle">
   This project was conceived out of a desire to create an offline experience for

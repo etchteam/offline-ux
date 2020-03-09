@@ -2,9 +2,9 @@
 layout: default.hbs
 ---
 
-[&larr; Back to all articles](/)
-
-# Show a custom offline page
+<div class="article-header">
+  <h1>Show a custom offline page</h1>
+</div>
 
 <p class="subtitle">
   Display a more engaging custom branded offline webpage when users move offline

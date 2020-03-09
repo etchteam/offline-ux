@@ -30,11 +30,12 @@ body {
 }
 
 main {
-  padding: var(--space-lg);
+  padding: var(--space);
 }
 
 .wrap {
   max-width: var(--max-content-width);
+  margin: 0 auto;
 }
 
 h1, h2 {
@@ -74,13 +75,6 @@ img {
   box-shadow: var(--shadow);
   display: block;
   max-width: 100%;
-}
-
-.logo {
-  box-shadow: none;
-  margin-bottom: var(--space-lg);
-  height: auto;
-  width: 5em;
 }
 
 .subtitle {
@@ -130,4 +124,10 @@ pre[class*='language-'] {
 
 .token.function, .token.tag, .token.class-name, .token.number {
   color: var(--color-razzmatazz);
+}
+
+@media (min-width: 500px) {
+  main {
+    padding: var(--space-lg);
+  }
 }

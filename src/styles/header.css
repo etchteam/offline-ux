@@ -1,0 +1,9 @@
+.header {
+  margin-bottom: var(--space-lg);
+
+  & .header__logo {
+    box-shadow: none;
+    height: auto;
+    width: 5em;
+  }
+}

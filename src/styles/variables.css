@@ -1,5 +1,5 @@
 :root {
-  --max-content-width: 35em;
+  --max-content-width: 30em;
 
   --color-black: #101010;
   --color-azuri: #067df7;
@@ -24,4 +24,6 @@
   --size: 1em;
   --size-lg: 1.25em;
   --size-xl: 1.75em;
+
+  --breakpoint-mobile: 500px;
 }

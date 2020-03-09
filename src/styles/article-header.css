@@ -1,0 +1,41 @@
+.article-header {
+  --square-background: rgba(190, 39, 220, .1);
+
+  align-items: center;
+  display: flex;
+  height: 9em;
+  justify-content: flex-end;
+  position: relative;
+  margin: var(--space-xl) 0;
+  padding: var(--space) 0;
+
+  & h1 {
+    color: var(--color-purple);
+    font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+    font-weight: normal;
+    text-align: right;
+    max-width: 320px;
+    width: 100%;
+    margin: 0;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6em;
+    height: 6em;
+    background: var(--square-background);
+  }
+
+  &::before {
+    left: 3em;
+  }
+
+  &::after {
+    top: 3em;
+  }
+}

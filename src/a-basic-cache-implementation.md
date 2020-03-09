@@ -2,9 +2,9 @@
 layout: default.hbs
 ---
 
-[&larr; Back to all articles](/)
-
-# A basic cache implementation
+<div class="article-header">
+  <h1>A basic cache implementation</h1>
+</div>
 
 <p class="subtitle">
   Even the most basic cache implementation can simultaneously improve performance
