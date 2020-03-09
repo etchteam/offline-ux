@@ -28,7 +28,7 @@ offline experience is going to be out of budget.
   all major browsers except ios safari and ie
 </a>
 
-## Serving a basic offline page
+## Serving an offline page
 
 <div class="callout">
   
@@ -113,7 +113,7 @@ to see the offline page in action.
 This is a basic implementation for a generic offline page but it opens up many more
 possibilities. In an actual website we can do better with minimal extra effort.
 
-## Maintaining context
+## Maintain website context
 
 ![Offline page with shell](/assets/custom-offline-page/offline-with-shell.png)
 
@@ -121,19 +121,29 @@ A go-to approach for optimising any app and providing better support for unrelia
 network connections in general is to keep a copy of the websites "shell" in the cache.
 
 Nearly all websites have a few consistent layout elements across all pages like a
-header, footer, maybe a page container or sidebar. If these elements are added to
-the cache they can be used to load the page layout instantly on repeat visits.
+header, footer, maybe a page container or sidebar. If the necessary assets are
+added to the cache to display these elements can be used to load the page
+layout instantly on repeat visits.
 
-By including these elements on the custom offline page it maintains website context
+Including these elements on the custom offline page handles the situation
+gracefully by maintaining website context. The experience will be less
+disorientating for users and avoid it feeling like they've been booted out of
+the website.
 
-- Easy mode: Branded offline page
-  - display part of the app shell so it looks like the user is still in the app
-  - wasted touchpoint?
+Presenting the shell offline is a great first step towards improving the offline
+page, but it still feels like a wasted touch-point. Offline pages are a bit different
+to other pages like the 404 page because users can't escape it without a network
+connection, so what else can be done to make the page a bit more engaging?
+
+## Offline page content
+
 - Give them something to do
   - self indulgent and unrealistic when building something for a client?
 - keep it current
   - display any blog entries you’ve added to the cache
   - What if we made our offline page so useful that users wanted to navigate to it?
+- Show when the network connection returns
+- Offer to send users what they were looking for once the connection is restored
 
 ## Examples
 
