@@ -11,7 +11,7 @@
 
   & h1 {
     color: var(--color-purple);
-    font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+    font-family: var(--font-code);
     font-weight: normal;
     text-align: right;
     max-width: 320px;

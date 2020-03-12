@@ -13,10 +13,10 @@ html {
 body {
   background: var(--color-white);
   color: var(--color-black);
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font);
   font-size: 18px;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 ::selection {
@@ -84,9 +84,9 @@ img {
 
 code {
   color: var(--color-razzmatazz);
-  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  font-family: var(--font-code);
   font-size: 0.875em;
-  line-height: 1.575em;
+  line-height: 1.5em;
   padding: 0 .25em;
 }
 
@@ -96,9 +96,9 @@ pre[class*='language-'] {
   border-radius: 0;
   padding: 0;
   color: var(--color-black);
-  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  font-family: var(--font-code);
   font-size: 0.875em;
-  line-height: 1.575em;
+  line-height: 1.5em;
   tab-size: 4;
   text-align: left;
   hyphens: none;
