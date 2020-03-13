@@ -172,7 +172,7 @@ page.
 
 ### Give them something to do
 
-![Offline dinosaur game](/assets/custom-offline-page/offline-game.png)
+![Articles available to view offline](/assets/custom-offline-page/offline-posts.jpg)
 
 Popularised by the Chrome dinosaur game, A growing number of websites have
 approached this by presenting some type of game to interact with whilst on the page.
@@ -185,29 +185,12 @@ For users to get the most value out of the content displayed within the page, tr
 to focus on displaying the primary content already on the website.
 
 For example, websites with a blog as primary content could dig into the cache to
-pull up and display the articles that readers had previously viewed.
+pull up and display the articles that readers had previously viewed or marked for
+later reading.
 
 ### Notify on connection recovery
 
+![Connection recovered notification](/assets/custom-offline-page/notify-offline.jpg)
 
-## Give them something to do
-
-Many websites provide something to interact with on their offline page to keep
-users on the page and give them a memorable experience.
-
-The most recognised version of this is the Google Chrome dinosaur game that lives
-on the browsers generic offline page. Other examples include telegraphs crossword
-puzzle and the colouring game on dev.to
-
-Building something like this might appear unrealistic when building something for
-a client and possibly a bit over indulgent. 
-
-- keep it current
-  - display any blog entries you’ve added to the cache
-  - What if we made our offline page so useful that users wanted to navigate to it?
-- Show when the network connection returns
 - Offer to send users what they were looking for once the connection is restored
-
-## Examples
-
-![Google search offline](/assets/custom-offline-page/google.jpg)
+- React when the network connection returns
