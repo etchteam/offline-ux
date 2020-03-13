@@ -3,16 +3,21 @@ layout: default.hbs
 ---
 
 <div class="article-header">
-  <h1>Show a custom offline page</h1>
+
+  # Offline page
+
 </div>
 
 <p class="subtitle">
-  Display a more engaging custom branded offline webpage when users move offline
-  instead of the generic default web browser one.
+  Implementing an offline page should be just as essential as including
+  a 404 page on your website.
 </p>
 
-A custom offline page is a good fallback option on any project even if the full
-offline experience is going to be out of budget.
+Nearly all websites can benefit from displaying an offline page, instead of the generic
+one included with browsers.
+
+It's simple enough to implement as a good fallback option on any project, even
+if a more comprehensive offline experience is going to be out of budget.
 
 ![Custom offline page](/assets/custom-offline-page/offline-page.jpg)
 
@@ -28,24 +33,25 @@ offline experience is going to be out of budget.
   all major browsers except ios safari and ie
 </a>
 
-## Serving an offline page
+## Implementing an offline page
 
 <div class="callout">
   
-  **Notice:** This assumes some knowledge of service workers and the cache API provided
+  **Notice:** This assumes knowledge of service workers and the cache API provided
   in the [basic cache implementation article](/a-basic-cache-implementation.html).
 
 </div>
 
-The custom offline page will need to display whenever a network issue is encountered
-whilst fetching another webpage. This involves three steps:
+Serving a specific page to users that are offline involves three steps:
 
-1. Caching the offline page
-2. Trying a fetch request
-3. If the fetch fails, serve the cached offline page
+1. Cache the page
+2. Try a fetch request
+3. If the fetch fails, serve the cached page
 
-The service worker "install" event can be used to set up the cache, on install the
-`offline.html` file containing the custom offline page can be cached...
+### Cache the page
+
+As always, the service worker "install" event is the best place to set up the
+cache. On install an offline page (`offline.html`) can be cached...
 
 ```javascript
 const cacheName = 'offlinePage';
@@ -61,11 +67,14 @@ self.addEventListener('install', event => {
 });
 ```
 
-This will make sure our offline page is safely stored in a cache called "offlinePage"
-when the website first loads. It's now ready to be used without requiring a network
-connection.
+The offline page is safely stored in the cache called "offlinePage", it's now
+ready to be used without requiring a network connection.
 
-The next step is "trying a fetch request"...
+### Try a fetch request
+
+Every time any network request occurs the browser sends off a `fetch` request,
+including for any images or scripts. For this implementation, it's important the
+offline page is only served when other **pages** are requested...
 
 ```javascript
 const getPage = event => {
@@ -81,19 +90,17 @@ self.addEventListener('fetch', event => {
 });
 ```
 
-Every time any network request occurs the browser sends off a `fetch` request,
-including for any images or scripts. It's important that the implementation only
-serves the offline page when other pages are requested.
+`event.request.mode` makes it possible to tell what the request is for, it will
+only be equal to `navigate` when the request is for a HTML webpage.
 
-This is accomplished here by checking `event.request.mode` which will be equal to
-`navigate` only when the request is for a HTML webpage.
+If `event.respondWith` is never called then the browser will carry out the
+request as normal. So if the `navigate` check fails it's safe to simply `return`
+and exit the function execution.
 
-If `event.respondWith` is never called within the service workers fetch event handler
-the browser will carry out the request as normal. So if the `navigate` check fails
-it's safe to simply `return` and exit the function execution.
+### If the fetch fails, serve the cached page
 
-Finally, a `catch` can be added on the request to react to any network failures by
-serving the custom offline page instead...
+The `fetch` request will `throw` if it fails, so a `catch` can be added to
+respond with the cached offline page in place of the missing network response...
 
 ```javascript
 const getPage = event => {
@@ -105,15 +112,45 @@ const getPage = event => {
 };
 ```
 
+An important distinction to notice here is that we only need to react when a
+**network request fails**, this is different to the
+[basic cache implementation](/a-basic-cache-implementation.html) where the contents
+of the cache is read before the network request occurs. So the two solutions
+could be implemented at the same time...
+
+```javascript
+const getPage = event => {
+  const cache = await caches.open(cacheName);
+  const cachedResponse = await cache.match(request);
+
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  return fetch(event.request).catch(async () => {
+    return await cache.match(offlineUrl);
+  });
+};
+```
+
 The website will now serve the custom offline page based on if the user has a
 network connection. Take a look at <a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">the full working version of this code</a>
-or the demo <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">demo</a>
+or the <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">demo</a>
 to see the offline page in action.
 
-This is a basic implementation for a generic offline page but it opens up many more
-possibilities. In an actual website we can do better with minimal extra effort.
+## Adding content
 
-## Maintain website context
+So far we've got a working, but relatively empty, offline page. Compared to relying
+on the default browser offline page It's already an improvement, adding a general
+"you are offline" message and leaving it there may be tempting. But doesn't this
+feel like a wasted touch-point?
+
+Offline pages are different to other error pages because people will be stuck
+on the page until they give up waiting or their network connection is restored.
+So, it's worth considering how to make the page a bit more friendly and maybe even
+useful.
+
+### Maintain website context
 
 ![Offline page with shell](/assets/custom-offline-page/offline-with-shell.png)
 
@@ -131,14 +168,40 @@ disorientating for users and avoid it feeling like they've been booted out of
 the website.
 
 Presenting the shell offline is a great first step towards improving the offline
-page, but it still feels like a wasted touch-point. Offline pages are a bit different
-to other pages like the 404 page because users can't escape it without a network
-connection, so what else can be done to make the page a bit more engaging?
+page.
 
-## Offline page content
+### Give them something to do
 
-- Give them something to do
-  - self indulgent and unrealistic when building something for a client?
+![Offline dinosaur game](/assets/custom-offline-page/offline-game.png)
+
+Popularised by the Chrome dinosaur game, A growing number of websites have
+approached this by presenting some type of game to interact with whilst on the page.
+
+While this is fun, in many cases it's unrealistic to expect that it would be part
+of a production projects budget. It's also more than likely not the most valuable
+content that could be presented.
+
+For users to get the most value out of the content displayed within the page, try
+to focus on displaying the primary content already on the website.
+
+For example, websites with a blog as primary content could dig into the cache to
+pull up and display the articles that readers had previously viewed.
+
+### Notify on connection recovery
+
+
+## Give them something to do
+
+Many websites provide something to interact with on their offline page to keep
+users on the page and give them a memorable experience.
+
+The most recognised version of this is the Google Chrome dinosaur game that lives
+on the browsers generic offline page. Other examples include telegraphs crossword
+puzzle and the colouring game on dev.to
+
+Building something like this might appear unrealistic when building something for
+a client and possibly a bit over indulgent. 
+
 - keep it current
   - display any blog entries you’ve added to the cache
   - What if we made our offline page so useful that users wanted to navigate to it?

@@ -3,7 +3,9 @@ layout: default.hbs
 ---
 
 <div class="article-header">
-  <h1>The ultimate offline experience</h1>
+
+  # The ultimate offline experience
+
 </div>
 
 <p class="subtitle">

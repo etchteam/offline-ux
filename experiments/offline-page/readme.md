@@ -1,7 +1,7 @@
-# Show a custom offline page
+# Offline page
 
-Display a more engaging custom branded offline webpage when users move offline
-instead of the generic default web browser one...
+Implementing an offline page should be just as essential as including a 404 page
+on your website...
 
 ---
 
@@ -17,4 +17,4 @@ offline page.
 
 ---
 
-*Imported from Github etchteam/offline:/experiments/custom-offline-page/*
+*Imported from Github etchteam/offline:/experiments/offline-page/*

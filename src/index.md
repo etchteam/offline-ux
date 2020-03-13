@@ -43,10 +43,11 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      Show a custom offline page
+      Offline page
     </h2>
     <p class="articles__item-content">
-      Display a custom branded offline webpage when users are offline&hellip;
+      Implementing an offline page should be just as essential as including
+      a 404 page on your website&hellip;
     </p>
     <a href="/custom-offline-page.html">Read &rarr;</a>
   </div>

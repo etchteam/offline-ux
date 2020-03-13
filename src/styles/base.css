@@ -38,8 +38,12 @@ main {
   margin: 0 auto;
 }
 
-h1, h2 {
+h1, h2, h3 {
   margin: var(--space) 0 var(--space-sm) 0;
+
+  & + p {
+    margin-top: 0;
+  }
 }
 
 h1 {
@@ -127,6 +131,10 @@ pre[class*='language-'] {
 }
 
 @media (min-width: 500px) {
+  h1 {
+    font-size: 2em;
+  }
+
   main {
     padding: var(--space-lg);
   }

@@ -3,7 +3,9 @@ layout: default.hbs
 ---
 
 <div class="article-header">
-  <h1>A basic cache implementation</h1>
+
+  # A basic cache implementation
+
 </div>
 
 <p class="subtitle">
