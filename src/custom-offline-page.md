@@ -134,7 +134,7 @@ const getPage = event => {
 ```
 
 The website will now serve the custom offline page based on if the user has a
-network connection. Take a look at <a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">the full working version of this code</a>
+network connection. Take a look at <a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">the working version of this code</a>
 or the <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">demo</a>
 to see the offline page in action.
 
@@ -142,8 +142,8 @@ to see the offline page in action.
 
 So far we've got a working, but relatively empty, offline page. Compared to relying
 on the default browser offline page It's already an improvement, adding a general
-"you are offline" message and leaving it there may be tempting. But doesn't this
-feel like a wasted touch-point?
+"you are offline" message and leaving it there may be tempting. But this
+could be a wasted touch-point.
 
 Offline pages are different to other error pages because people will be stuck
 on the page until they give up waiting or their network connection is restored.
@@ -158,8 +158,8 @@ A go-to approach for optimising any app and providing better support for unrelia
 network connections in general is to keep a copy of the websites "shell" in the cache.
 
 Nearly all websites have a few consistent layout elements across all pages like a
-header, footer, maybe a page container or sidebar. If the necessary assets are
-added to the cache to display these elements can be used to load the page
+header, footer, maybe a page container or sidebar. If the styles and assets used
+in these elements are added to the cache they can be used to display the page
 layout instantly on repeat visits.
 
 Including these elements on the custom offline page handles the situation
@@ -174,8 +174,9 @@ page.
 
 ![Articles available to view offline](/assets/custom-offline-page/offline-posts.jpg)
 
-Popularised by the Chrome dinosaur game, A growing number of websites have
-approached this by presenting some type of game to interact with whilst on the page.
+Popularised by the Chrome dinosaur game, A growing number of websites have taken
+this literally by presenting some type of game to interact with whilst on the page
+completely separate to the rest of the websites content.
 
 While this is fun, in many cases it's unrealistic to expect that it would be part
 of a production projects budget. It's also more than likely not the most valuable
@@ -188,9 +189,33 @@ For example, websites with a blog as primary content could dig into the cache to
 pull up and display the articles that readers had previously viewed or marked for
 later reading.
 
+### Handle page actions
+
+![Offline actions](/assets/custom-offline-page/offline-actions.jpg)
+
+If the page contains interactive elements the user would expect these to work
+normally, unless they're given visual indication otherwise.
+
+Popular web apps like <a href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a>
+will sync a users actions once they're back online. This is made possible through <a href="https://developers.google.com/web/updates/2015/12/background-sync" target="_blank" rel="noopener noreferrer">background sync</a>
+or offline compatible databases like <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Concepts_Behind_IndexedDB" target="_blank" rel="noopener noreferrer">IndexedDB</a>.
+
+If implementing this type of sync is out of scope then interactive elements of
+the page that require a network connection will need to be disabled. It should
+be made obvious that users can't interact with them without a network connection.
+
 ### Notify on connection recovery
 
 ![Connection recovered notification](/assets/custom-offline-page/notify-offline.jpg)
 
-- Offer to send users what they were looking for once the connection is restored
-- React when the network connection returns
+Even with something to do, many won't wait for the network connection to return.
+Rather than ignoring this fact, the offline page could be taken to the next level
+by embracing this and offering to notify users with the content they're looking
+for once their connection is restored.
+
+A good example of this is how Google handles dropped connections during a
+search. Google will remember the search and send a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Push_API" target="_blank" rel="noopener noreferrer">push notification</a>
+when the search results are ready to view.
+
+This let's the user get on with whatever else they want to do and provides an
+easy way to pick up where they left off once the connection has been recovered.
