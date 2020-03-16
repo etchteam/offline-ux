@@ -21,16 +21,16 @@ if a more comprehensive offline experience is going to be out of budget.
 
 ![Custom offline page](/assets/offline-page/offline-page.jpg)
 
-<a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">
+<a href="https://offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">
   view demo
 </a>
 &nbsp; | &nbsp;
-<a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">
+<a href="https://glitch.com/edit/#!/offline-page" target="_blank" rel="noopener noreferrer">
   view code
 </a>
 &nbsp; | &nbsp;
 <a href="https://caniuse.com/#search=caches" target="_blank" rel="noopener noreferrer">
-  all major browsers except ios safari and ie
+  all major browsers except IE
 </a>
 
 ## Implementing an offline page

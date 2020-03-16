@@ -18,16 +18,16 @@ webpage shown below can be viewed without any network connection.
 
 ![A basic cache example](/assets/my-first-cache/basic-cache-example.png)
 
-<a href="https://a-basic-cache.glitch.me">
+<a href="https://my-first-cache.glitch.me/" target="_blank" rel="noopener noreferrer">
   view demo
 </a>
 &nbsp; | &nbsp;
-<a href="https://glitch.com/edit/#!/a-basic-cache">
+<a href="https://glitch.com/edit/#!/my-first-cache" target="_blank" rel="noopener noreferrer">
   view code
 </a>
 &nbsp; | &nbsp;
-<a href="https://caniuse.com/#search=caches">
-  all major browsers except ios safari and ie
+<a href="https://caniuse.com/#search=caches" target="_blank" rel="noopener noreferrer">
+  all major browsers except IE
 </a>
 
 ## Creating a service worker
