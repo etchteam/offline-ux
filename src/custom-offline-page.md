@@ -197,7 +197,7 @@ If the page contains interactive elements the user would expect these to work
 normally, unless they're given visual indication otherwise.
 
 Popular web apps like <a href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a>
-will sync a users actions once they're back online. This is made possible through <a href="https://developers.google.com/web/updates/2015/12/background-sync" target="_blank" rel="noopener noreferrer">background sync</a>
+can sync a users actions once they're back online. This is made possible through <a href="https://developers.google.com/web/updates/2015/12/background-sync" target="_blank" rel="noopener noreferrer">background sync</a>
 or offline compatible databases like <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Concepts_Behind_IndexedDB" target="_blank" rel="noopener noreferrer">IndexedDB</a>.
 
 If implementing this type of sync is out of scope then interactive elements of
@@ -219,3 +219,15 @@ when the search results are ready to view.
 
 This let's the user get on with whatever else they want to do and provides an
 easy way to pick up where they left off once the connection has been recovered.
+
+## Conclusion
+
+The offline page works well as a fallback when a page can't be served due to
+connectivity issues. It provides a nice safety net where we can control what
+the user sees when they're offline and a simple version can be implemented quickly
+enough that it could be added to any project.
+
+Looking beyond the offline page, ideally we shouldn't need to fall back to it at
+all. The ultimate offline experience would be if the whole website worked without
+a connection, then we wouldn't need to fall back to an offline page and users
+could carry on relatively uninterrupted!
