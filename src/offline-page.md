@@ -19,7 +19,7 @@ one included with browsers.
 It's simple enough to implement as a good fallback option on any project, even
 if a more comprehensive offline experience is going to be out of budget.
 
-![Custom offline page](/assets/custom-offline-page/offline-page.jpg)
+![Custom offline page](/assets/offline-page/offline-page.jpg)
 
 <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">
   view demo
@@ -38,7 +38,7 @@ if a more comprehensive offline experience is going to be out of budget.
 <div class="callout">
   
   **Notice:** This assumes knowledge of service workers and the cache API provided
-  in the [basic cache implementation article](/a-basic-cache-implementation.html).
+  in the [my first cache article](/my-first-cache.html).
 
 </div>
 
@@ -114,7 +114,7 @@ const getPage = event => {
 
 An important distinction to notice here is that we only need to react when a
 **network request fails**, this is different to the
-[basic cache implementation](/a-basic-cache-implementation.html) where the contents
+[my first cache implementation](/my-first-cache.html) where the contents
 of the cache is read before the network request occurs. So the two solutions
 could be implemented at the same time...
 
@@ -152,7 +152,7 @@ useful.
 
 ### Maintain website context
 
-![Offline page with shell](/assets/custom-offline-page/offline-with-shell.png)
+![Offline page with shell](/assets/offline-page/offline-with-shell.png)
 
 A go-to approach for optimising any app and providing better support for unreliable
 network connections in general is to keep a copy of the websites "shell" in the cache.
@@ -172,7 +172,7 @@ page.
 
 ### Give them something to do
 
-![Articles available to view offline](/assets/custom-offline-page/offline-posts.jpg)
+![Articles available to view offline](/assets/offline-page/offline-posts.jpg)
 
 Popularised by the Chrome dinosaur game, A growing number of websites have taken
 this literally by presenting some type of game to interact with whilst on the page
@@ -191,7 +191,7 @@ later reading.
 
 ### Handle page actions
 
-![Offline actions](/assets/custom-offline-page/offline-actions.jpg)
+![Offline actions](/assets/offline-page/offline-actions.jpg)
 
 If the page contains interactive elements the user would expect these to work
 normally, unless they're given visual indication otherwise.
@@ -206,7 +206,7 @@ be made obvious that users can't interact with them without a network connection
 
 ### Notify on connection recovery
 
-![Connection recovered notification](/assets/custom-offline-page/notify-offline.jpg)
+![Connection recovered notification](/assets/offline-page/notify-offline.jpg)
 
 Even with something to do, many won't wait for the network connection to return.
 Rather than ignoring this fact, the offline page could be taken to the next level

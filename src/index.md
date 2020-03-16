@@ -22,13 +22,13 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      A basic cache implementation
+      My first cache
     </h2>
     <p class="articles__item-content">
       Even the most basic cache implementation can simultaneously improve
       performance and enable offline use of any website&hellip;
     </p>
-    <a href="/a-basic-cache-implementation.html">Read &rarr;</a>
+    <a href="/my-first-cache.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
@@ -49,7 +49,7 @@ layout: default.hbs
       Implementing an offline page should be just as essential as including
       a 404 page on your website&hellip;
     </p>
-    <a href="/custom-offline-page.html">Read &rarr;</a>
+    <a href="/offline-page.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">

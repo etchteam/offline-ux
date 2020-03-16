@@ -60,7 +60,7 @@ The cache is reliable, the connection is not. Therefore, the content should be c
 
 ![Visual cache indicators](/assets/the-ultimate-offline-experience/indicators.png)
 
-There's still a load of content on the web page that hasn't been cached yet, if the users connection isn't good enough they'll have trouble viewing it.
+There's still a lot of content on the web page that hasn't been cached yet, if the users connection isn't good enough they'll have trouble viewing it.
 
 Traditionally, a user would innocently click through without knowing this. Inevitably they will end up:
 
@@ -94,4 +94,4 @@ The best techniques will be uncovered and a lot of them won't be as difficult as
 
 So if you're interested in building better web experiences, let's get started! Different solutions will suit different projects and budgets, there isn't a one size fits all, take a look around and pick up or adapt part of the solution that suits. Here's a few topics that might set you on the right track...
 
-[A basic cache implementation &rarr;](/a-basic-cache-implementation.html)
+[My first cache &rarr;](/my-first-cache.html)

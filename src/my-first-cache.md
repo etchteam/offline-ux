@@ -4,7 +4,7 @@ layout: default.hbs
 
 <div class="article-header">
 
-  # A basic cache implementation
+  # My first cache
 
 </div>
 
@@ -16,7 +16,7 @@ layout: default.hbs
 Let's start experimenting with caching by seeing how all the content on the
 webpage shown below can be viewed without any network connection.
 
-![A basic cache example](/assets/a-basic-cache-implementation/basic-cache-example.png)
+![A basic cache example](/assets/my-first-cache/basic-cache-example.png)
 
 <a href="https://a-basic-cache.glitch.me">
   view demo
@@ -58,7 +58,7 @@ most of the time this code is set up to be called whenever a page loads...
 After adding this code, if you were to reload the page, open developer tools and
 navigate to the application tab, it would show that the service worker gets registered.
 
-![Service worker registered](/assets/a-basic-cache-implementation/service-worker-registered.png)
+![Service worker registered](/assets/my-first-cache/service-worker-registered.png)
 
 <div class="callout">
 
@@ -155,7 +155,7 @@ A successful install of this web page now means a connection is no longer requir
 Viewing the network requests in dev tools will show the dependant items served
 from the service worker instead.
 
-![Serving from the cache](/assets/a-basic-cache-implementation/service-worker-fetch.png)
+![Serving from the cache](/assets/my-first-cache/service-worker-fetch.png)
 
 ## Keeping the cache up to date
 
@@ -170,7 +170,7 @@ to date versions of the files.
 
 But updating `cacheName` still doesn't cause the content to change, frustrating!
 
-![Waiting to activate](/assets/a-basic-cache-implementation/waiting-to-activate.png)
+![Waiting to activate](/assets/my-first-cache/waiting-to-activate.png)
 
 Upon further investigation, the application tab in dev tools is saying that a version
 of the service worker is "waiting to activate". This means the new service worker
