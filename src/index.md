@@ -36,9 +36,10 @@ layout: default.hbs
       Caching content
     </h2>
     <p class="articles__item-content">
-      Deliver content without a network connection and improve performance by
-      utilizing the cache&hellip;
+      A well implemented cache is fundamental to keeping a website performant and
+      functional despite unreliable connections&hellip;
     </p>
+    <a href="/caching-content.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
