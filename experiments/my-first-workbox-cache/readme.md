@@ -21,4 +21,4 @@ connection required 💪
 
 ---
 
-*Imported from Github etchteam/offline:/experiments/my-first-cache/*
+*Imported from Github etchteam/offline:/experiments/my-first-workbox-cache/*
