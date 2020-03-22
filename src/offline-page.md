@@ -152,6 +152,12 @@ useful.
 
 ### Maintain website context
 
+<div class="callout">
+  
+  ✅ **Do:** Cache and display the websites "shell"
+
+</div>
+
 ![Offline page with shell](/assets/offline-page/offline-with-shell.png)
 
 A go-to approach for optimising any app and providing better support for unreliable
@@ -172,6 +178,14 @@ page.
 
 ### Give them something to do
 
+<div class="callout">
+  
+  ✅ **Do:** Display the primary website content</br>
+  ❌ **Don't:** Spend time creating a complex offline page that doesn't align with
+  the content or goals of the rest of the website
+
+</div>
+
 ![Articles available to view offline](/assets/offline-page/offline-posts.jpg)
 
 Popularised by the Chrome dinosaur game, A growing number of websites have taken
@@ -191,6 +205,14 @@ later reading.
 
 ### Handle page actions
 
+<div class="callout">
+  
+  ✅ **Do:** Visually disable interactive elements that won't work offline</br>
+  ✅ **Do:** Add offline specific functionality to handle user interactions</br>
+  ❌ **Don't:** Leave offline incompatible interactions without any handling
+
+</div>
+
 ![Offline actions](/assets/offline-page/offline-actions.jpg)
 
 If the page contains interactive elements the user would expect these to work
@@ -205,6 +227,12 @@ the page that require a network connection will need to be disabled. It should
 be made obvious that users can't interact with them without a network connection.
 
 ### Notify on connection recovery
+
+<div class="callout">
+  
+  ✅ **Do:** Offer to send notifications upon network recovery
+
+</div>
 
 ![Connection recovered notification](/assets/offline-page/notify-offline.jpg)
 
