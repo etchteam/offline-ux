@@ -77,4 +77,35 @@ workbox.routing.registerRoute(
   new RegExp('\.(?:css|html|jpeg)$'),
   strategy
 );
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
 ```
+
+Much cleaner right!
+
+We're using `workbox.strategies.CacheFirst` for the home route or any files ending
+in .css, .jpeg or .html (based on the regex). This will handle:
+
+1. Attempting to serve content from a cache called "offline"
+2. Falling back to the network if nothing is found in the cache
+3. Updating the cache with the network response
+
+It'll also cleanup stale caches for us too.
+
+<a href="https://developers.google.com/web/tools/workbox/modules/workbox-strategies" target="_blank" rel="noopener noreferrer">Learn more about other caching strategies</a>
+workbox makes available or see
+<a href="https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3"  target="_blank" rel="noopener noreferrer">this cache in action</a>.
+
+So far, this cache only replicates the functionality of the last one with less
+lines of code. There is still a big problem, if the website content changes then
+the cache will not automatically update. People who have already viewed the site
+will all see out of date content.
+
+## Automatically update the cache
+
+There are two ways to solve this problem...
+
+1. Update file names when a file changes
+2. Update the contents of the cache on detected file changes

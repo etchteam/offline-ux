@@ -9,3 +9,7 @@ workbox.routing.registerRoute(
   new RegExp('\.(?:css|html|jpeg)$'),
   strategy
 );
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
