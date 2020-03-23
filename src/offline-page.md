@@ -181,8 +181,6 @@ page.
 <div class="callout">
   
   ✅ **Do:** Display the primary website content</br>
-  ❌ **Don't:** Spend time creating a complex offline page that doesn't align with
-  the content or goals of the rest of the website
 
 </div>
 
@@ -207,9 +205,9 @@ later reading.
 
 <div class="callout">
   
-  ✅ **Do:** Visually disable interactive elements that won't work offline</br>
-  ✅ **Do:** Add offline specific functionality to handle user interactions</br>
-  ❌ **Don't:** Leave offline incompatible interactions without any handling
+  ✅ **Do:** Add offline functionality to handle user interactions</br>
+  ✅ **Do:** Visually disable interactions that won't work offline</br>
+  ❌ **Don't:** Leave in offline incompatible interactions
 
 </div>
 
