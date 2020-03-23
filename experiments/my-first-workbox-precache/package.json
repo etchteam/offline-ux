@@ -1,0 +1,16 @@
+{
+  "name": "my-first-workbox-precache",
+  "version": "1.0.0",
+  "description": "Even the most basic cache implementation can simultaneously improve performance and enable offline use of any website...",
+  "main": "service-worker.js",
+  "scripts": {
+    "setup-precache": "workbox wizard",
+    "precache": "workbox injectManifest"
+  },
+  "keywords": [],
+  "author": "Dan Webb <mail@danwebb.co> (https://danwebb.co)",
+  "license": "MIT",
+  "devDependencies": {
+    "workbox-cli": "5.1.1"
+  }
+}
