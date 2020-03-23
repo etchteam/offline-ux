@@ -68,14 +68,14 @@ self.addEventListener('activate', event => {
 Here's the same implementation in Workbox...
 
 ```javascript
-const strategy = new workbox.strategies.CacheFirst({
+const cacheFirst = new workbox.strategies.CacheFirst({
   cacheName: 'offline'
 });
 
-workbox.routing.registerRoute('/', strategy);
+workbox.routing.registerRoute('/', cacheFirst);
 workbox.routing.registerRoute(
   new RegExp('\.(?:css|html|jpeg)$'),
-  strategy
+  cacheFirst
 );
 
 self.addEventListener('install', () => {
@@ -95,7 +95,7 @@ in .css, .jpeg or .html (based on the regex). This will handle:
 It'll also cleanup stale caches for us too.
 
 <a href="https://developers.google.com/web/tools/workbox/modules/workbox-strategies" target="_blank" rel="noopener noreferrer">Learn more about other caching strategies</a>
-workbox makes available or see
+that Workbox makes available or see
 <a href="https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3"  target="_blank" rel="noopener noreferrer">this cache in action</a>.
 
 So far, this cache only replicates the functionality of the last one with less
@@ -105,7 +105,29 @@ will all see out of date content.
 
 ## Automatically update the cache
 
-There are two ways to solve this problem...
+There are three ways to solve this problem...
 
-1. Update file names when a file changes
-2. Update the contents of the cache on detected file changes
+1. Update cache content on detected file changes
+2. Set an expiration time on the cache
+3. Change file names to trigger cache updates
+
+### Update cache content on detected file changes
+
+### Set an expiration time on the cache
+
+Out of all the content on most websites images are one of the least likely to
+regularly update, they also consume the most cache storage space and are often
+not essential for the website to work.
+
+So a sensible approach is to create a separate dedicated image cache.
+
+### Change file names to trigger cache updates
+
+## Avoid using the CDN
+
+Currently the Workbox code in the service worker uses a CDN script, the script is
+smart but still adds overhead pulling in the modules it needs.
+
+A better approach would be to only import the specific modules that are being used,
+this will reduce the overall service worker size and improve how we managing including
+and versioning the modules.

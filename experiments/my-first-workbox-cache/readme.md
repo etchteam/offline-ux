@@ -1,7 +1,6 @@
-# My first cache
+# My first Workbox cache
 
-Even the most basic cache implementation can simultaneously improve performance
-and enable offline use of any website...
+A Workbox implementation of [my first cache](https://glitch.com/edit/#!/my-first-cache)...
 
 ---
 
