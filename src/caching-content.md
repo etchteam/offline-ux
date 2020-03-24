@@ -68,6 +68,8 @@ self.addEventListener('activate', event => {
 Here's the same implementation in Workbox...
 
 ```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
 const cacheFirst = new workbox.strategies.CacheFirst({
   cacheName: 'offline'
 });
@@ -112,6 +114,32 @@ There are three ways to solve this problem...
 3. Change file names to trigger cache updates
 
 ### Update cache content on detected file changes
+
+Workbox has a concept called "precache" which is a set of files that will be downloaded
+and cached on the service worker "install" event.
+
+It's possible to manually change the current service worker to use precaching, here's
+how it would look...
+
+```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute([
+  {
+    "revision": "1",
+    "url": "image.jpeg"
+  }, {
+    "revision":"1",
+    "url":"index.html"
+  }, {
+    "revision":"1",
+    "url":"styles.css"
+  }
+]);
+```
+
+The `precacheAndRoute` function will handle storing all the URLs in the cache and
+setting up a routes for them using the `CacheFirst` strategy.
 
 ### Set an expiration time on the cache
 
