@@ -21,17 +21,11 @@ if a more comprehensive offline experience is going to be out of budget.
 
 ![Custom offline page](/assets/offline-page/offline-page.jpg)
 
-<a href="https://offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">
-  view demo
-</a>
+[view demo](https://offline-page.glitch.me/)
 &nbsp; | &nbsp;
-<a href="https://glitch.com/edit/#!/offline-page" target="_blank" rel="noopener noreferrer">
-  view code
-</a>
+[view code](https://glitch.com/edit/#!/offline-page)
 &nbsp; | &nbsp;
-<a href="https://caniuse.com/#search=caches" target="_blank" rel="noopener noreferrer">
-  all major browsers except IE
-</a>
+[all major browsers except IE](https://caniuse.com/#search=caches)
 
 ## Implementing an offline page
 
@@ -134,9 +128,9 @@ const getPage = event => {
 ```
 
 The website will now serve the custom offline page based on if the user has a
-network connection. Take a look at <a href="https://glitch.com/edit/#!/custom-offline-page" target="_blank" rel="noopener noreferrer">the working version of this code</a>
-or the <a href="https://custom-offline-page.glitch.me/" target="_blank" rel="noopener noreferrer">demo</a>
-to see the offline page in action.
+network connection. Take a look at [the working version of this code](https://glitch.com/edit/#!/custom-offline-page)
+or the [demo](https://custom-offline-page.glitch.me/) to see the offline page in
+action.
 
 ## Adding content
 
@@ -216,9 +210,9 @@ later reading.
 If the page contains interactive elements the user would expect these to work
 normally, unless they're given visual indication otherwise.
 
-Popular web apps like <a href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a>
-can sync a users actions once they're back online. This is made possible through <a href="https://developers.google.com/web/updates/2015/12/background-sync" target="_blank" rel="noopener noreferrer">background sync</a>
-or offline compatible databases like <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Concepts_Behind_IndexedDB" target="_blank" rel="noopener noreferrer">IndexedDB</a>.
+Popular web apps like [Trello](https://trello.com/) can sync a users actions once
+they're back online. This is made possible through [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
+or offline compatible databases like [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Concepts_Behind_IndexedDB).
 
 If implementing this type of sync is out of scope then interactive elements of
 the page that require a network connection will need to be disabled. It should
@@ -240,7 +234,7 @@ by embracing this and offering to notify users with the content they're looking
 for once their connection is restored.
 
 A good example of this is how Google handles dropped connections during a
-search. Google will remember the search and send a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Push_API" target="_blank" rel="noopener noreferrer">push notification</a>
+search. Google will remember the search and send a [push notification](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
 when the search results are ready to view.
 
 This let's the user get on with whatever else they want to do and provides an

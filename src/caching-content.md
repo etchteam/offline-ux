@@ -23,7 +23,7 @@ frequently updating caches manageable.
 ## The same cache, but better
 
 To start with, lets take the cache we already have and re-implement it. This time
-the cache is going to be built with <a href="https://developers.google.com/web/tools/workbox" target="_blank" rel="noopener noreferrer">Workbox</a>,
+the cache is going to be built with [Workbox](https://developers.google.com/web/tools/workbox),
 an open source library from Google.
 
 Here's the service worker code from [my first cache](/my-first-cache.html)...
@@ -96,9 +96,9 @@ in .css, .jpeg or .html (based on the regex). This will handle:
 
 It'll also cleanup stale caches for us too.
 
-<a href="https://developers.google.com/web/tools/workbox/modules/workbox-strategies" target="_blank" rel="noopener noreferrer">Learn more about other caching strategies</a>
+[Learn more about other caching strategies](https://developers.google.com/web/tools/workbox/modules/workbox-strategies)
 that Workbox makes available or see
-<a href="https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3"  target="_blank" rel="noopener noreferrer">this cache in action</a>.
+[this cache in action](https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3).
 
 So far, this cache only replicates the functionality of the last one with less
 lines of code. There is still a big problem, if the website content changes then
@@ -115,8 +115,9 @@ There are three ways to solve this problem...
 
 ### Update cache content on detected file changes
 
-Workbox has a concept called "precache" which is a set of files that will be downloaded
-and cached on the service worker "install" event.
+Workbox has a concept called "precaching". It involves defining a set of files
+along with version info that will be downloaded and cached on the service worker
+"install" event.
 
 It's possible to manually change the current service worker to use precaching, here's
 how it would look...
@@ -136,10 +137,26 @@ workbox.precaching.precacheAndRoute([
     "url":"styles.css"
   }
 ]);
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
 ```
 
 The `precacheAndRoute` function will handle storing all the URLs in the cache and
-setting up a routes for them using the `CacheFirst` strategy.
+setting up individual routes for them using the `CacheFirst` strategy.
+
+Another really handy feature is that it will account for common URL practices, we
+no longer need an extra route for `/` because `precacheAndRoute` is smart enough
+to match it to `index.html`.
+
+With this set up, changing the `revision` property on any of the files will cause
+the cache to update only where the revision has changed. This avoids having to update
+the entire cache when only part of it changes.
+
+Now we just need a way to automatically update the revision number when files change.
+
+The simplest way to do this is by using [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli)
 
 ### Set an expiration time on the cache
 

@@ -18,6 +18,7 @@ The end result will benefit all users by improving performance through intellige
 So, that sounds cool, but what does it looks like and how would it work?...
 
 ## Network first
+
 <p class="subtitle">
   Cache essential downloaded content
 </p>
@@ -33,6 +34,7 @@ While this is happening essential downloaded content should be being stored in a
 Eventually the user returns to the original web page, on the same day or a week later looking to re-read or find other interesting content on the page...
 
 ## Cache to the rescue
+
 <p class="subtitle">
   Content should be cache first then <i>enhanced</i> using the network
 </p>
@@ -54,6 +56,7 @@ They shouldn't...while online, downloaded essential network requests and assets 
 The cache is reliable, the connection is not. Therefore, the content should be cache first then *enhanced* using the network.
 
 ## Not everything is cached
+
 <p class="subtitle">
   Provide a visual indication of content that is unavailable or may be slow
 </p>
@@ -74,6 +77,7 @@ The web can be better than that and so, we should go a step further.
 This can be achieved by providing a visual indication of content that is unavailable or may be slow.
 
 ## Getting re-connected
+
 <p class="subtitle">
   Content seamlessly becomes available
 </p>

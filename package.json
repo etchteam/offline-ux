@@ -9,7 +9,7 @@
     "start": "npm-run-all --parallel watch serve",
     "watch": "watch \"npm run build\" src",
     "serve": "browser-sync start -s 'public' -f 'public'",
-    "build": "metalsmith"
+    "build": "node metalsmith.js"
   },
   "keywords": [],
   "author": "Dan Webb <dan@etch.co> (https://danwebb.co)",

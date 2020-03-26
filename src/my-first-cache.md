@@ -18,17 +18,11 @@ webpage shown below can be viewed without any network connection.
 
 ![A basic cache example](/assets/my-first-cache/basic-cache-example.png)
 
-<a href="https://my-first-cache.glitch.me/" target="_blank" rel="noopener noreferrer">
-  view demo
-</a>
+[view demo](https://my-first-cache.glitch.me/)
 &nbsp; | &nbsp;
-<a href="https://glitch.com/edit/#!/my-first-cache" target="_blank" rel="noopener noreferrer">
-  view code
-</a>
+[view code](https://glitch.com/edit/#!/my-first-cache)
 &nbsp; | &nbsp;
-<a href="https://caniuse.com/#search=caches" target="_blank" rel="noopener noreferrer">
-  all major browsers except IE
-</a>
+[all major browsers except IE](https://caniuse.com/#search=caches)
 
 ## Creating a service worker
 
@@ -63,7 +57,7 @@ navigate to the application tab, it would show that the service worker gets regi
 <div class="callout">
 
   **Remember:** Service workers require a
-  <a href="https://w3c.github.io/webappsec-secure-contexts/" target="_blank" rel="noopener noreferrer">secure context</a>,
+  [secure context](https://w3c.github.io/webappsec-secure-contexts/),
   make sure view the page over HTTPS or localhost.
 
 </div>
