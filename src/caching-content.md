@@ -101,19 +101,14 @@ that Workbox makes available or see
 [this cache in action](https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3).
 
 So far, this cache only replicates the functionality of the last one with less
-lines of code. There is still a big problem, if the website content changes then
-the cache will not automatically update. People who have already viewed the site
-will all see out of date content.
+lines of code. This still leaves the same two big problems:
 
-## Automatically update the cache
+- The cache will not automatically update on content changes. People who have
+already viewed the site will all see out of date content.
+- If we update the cache by changing the caches name the entire cache will need
+to be re-downloaded, instead of just the content that updated.
 
-There are three ways to solve this problem...
-
-1. Update cache content on detected file changes
-2. Set an expiration time on the cache
-3. Change file names to trigger cache updates
-
-### Update cache content on detected file changes
+## A better way to version caches
 
 Workbox has a concept called "precaching". It involves defining a set of files
 along with version info that will be downloaded and cached on the service worker
@@ -143,6 +138,10 @@ self.addEventListener('install', () => {
 });
 ```
 
+With this set up, changing the `revision` property on any of the files will cause
+the cache to update only where the revision has changed. This avoids having to update
+the entire cache when only part of it changes.
+
 The `precacheAndRoute` function will handle storing all the URLs in the cache and
 setting up individual routes for them using the `CacheFirst` strategy.
 
@@ -150,15 +149,62 @@ Another really handy feature is that it will account for common URL practices, w
 no longer need an extra route for `/` because `precacheAndRoute` is smart enough
 to match it to `index.html`.
 
-With this set up, changing the `revision` property on any of the files will cause
-the cache to update only where the revision has changed. This avoids having to update
-the entire cache when only part of it changes.
+Great, now we just need a way to automatically updating the revision number when
+files change.
 
-Now we just need a way to automatically update the revision number when files change.
+## Update caches on detected file changes
 
-The simplest way to do this is by using [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli)
+The implementation needs to move away manually defining a list of files and revision
+information. It's error prone and will take too much work to maintain in a large
+codebase. The list of files and versions needs to be generated instead.
 
-### Set an expiration time on the cache
+Workbox offers a few ways to generate the list of files at build time, the best
+way for this simple cache would be using [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli).
+
+To get started, install the CLI `npm i -g workbox-cli` and run the wizard
+`workbox wizard`...
+
+```bash
+> workbox wizard
+
+? Please enter the path to the root of your web app: .
+? Which file types would you like to precache? jpeg, html, css
+? Where would you like your service worker file to be saved? service-worker.js
+? Where would you like to save these configuration options? workbox-config.js
+```
+
+The wizard creates a config file that it will chuck in the
+projects root directory called `workbox-config.js`...
+
+```javascript
+module.exports = {
+  "globDirectory": ".",
+  "globPatterns": [
+    "*.{jpeg,html,css}"
+  ],
+  "swDest": "service-worker.js"
+};
+```
+
+Workbox suggests using the `workbox generateSW` command from here, this would generate
+the whole service worker for us based on the `workbox-config.js` file but we wouldn't
+have any control over what's output.
+
+We're going to need a bit more control than that, so we can define an `swSrc` inside
+`workbox-config.js` to tell it to use our service worker file as a template...
+
+```javascript
+module.exports = {
+  "globDirectory": ".",
+  "globPatterns": [
+    "*.{jpeg,html,css}"
+  ],
+  "swSrc": "service-worker-template.js",
+  "swDest": "service-worker.js"
+};
+```
+
+## Self updating caches
 
 Out of all the content on most websites images are one of the least likely to
 regularly update, they also consume the most cache storage space and are often
@@ -166,7 +212,7 @@ not essential for the website to work.
 
 So a sensible approach is to create a separate dedicated image cache.
 
-### Change file names to trigger cache updates
+## Cache versioning through file names
 
 ## Avoid using the CDN
 

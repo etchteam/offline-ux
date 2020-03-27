@@ -2,6 +2,7 @@
 @import './variables.css';
 @import './fonts.css';
 @import './base.css';
+@import './code.css';
 
 @import './header.css';
 @import './articles.css';

@@ -87,50 +87,6 @@ img {
   font-size: var(--size-lg);
 }
 
-code {
-  color: var(--color-razzmatazz);
-  font-family: var(--font-code);
-  font-size: 0.875em;
-  line-height: 1.5em;
-  padding: 0 .25em;
-}
-
-code[class*='language-'],
-pre[class*='language-'] {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  color: var(--color-black);
-  font-family: var(--font-code);
-  font-size: 0.875em;
-  line-height: 1.5em;
-  tab-size: 4;
-  text-align: left;
-  hyphens: none;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-}
-
-pre[class*='language-'] {
-  overflow: auto;
-  padding: var(--space);
-  margin: 0;
-  border: 1px solid var(--color-mercury);
-}
-
-.token.keyword {
-  font-weight: bold;
-}
-
-.token.string {
-  color: var(--color-emperor);
-}
-
-.token.function, .token.tag, .token.class-name, .token.number {
-  color: var(--color-razzmatazz);
-}
-
 @media (min-width: 500px) {
   h1 {
     font-size: 2em;
