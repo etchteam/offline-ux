@@ -55,6 +55,12 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
+      Offline website
+    </h2>
+  </div>
+
+  <div class="articles__item">
+    <h2 class="articles__item-title">
       Provide indicators for slow or offline content
     </h2>
     <p class="articles__item-content">
@@ -64,27 +70,11 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      How to offline
+      Getting re-connected
     </h2>
     <p class="articles__item-content">
-      Manifests, service workers, caches, background sync, tools and
-      frameworks...
+      Content should seamlessly become available when regaining a lost
+      connection&hellip;
     </p>
-  </div>
-
-  <div class="articles__item">
-    <h2 class="articles__item-title">
-      Adding a click to install button
-    </h2>
-    <p class="articles__item-content">
-      Could we allow users to opt into caching content up front? Let's have a
-      deep dive to find out&hellip;
-    </p>
-  </div>
-
-  <div class="articles__item">
-    <h2 class="articles__item-title">
-      Getting analytics to work offline
-    </h2>
   </div>
 </section>
