@@ -1,4 +1,4 @@
-# My first cache
+# My first offline website
 
 Even the most basic cache implementation can simultaneously improve performance
 and enable offline use of any website...
@@ -21,4 +21,4 @@ connection required 💪
 
 ---
 
-*Imported from Github etchteam/offline:/experiments/my-first-cache/*
+*Imported from Github etchteam/offline:/experiments/my-first-offline-website/*

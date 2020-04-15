@@ -1,6 +1,6 @@
-# My first Workbox cache
+# Workbox cache
 
-A Workbox implementation of [my first cache](https://glitch.com/edit/#!/my-first-cache)...
+A Workbox implementation of [my first offline website](https://glitch.com/edit/#!/my-first-offline-website)...
 
 ---
 
@@ -20,4 +20,4 @@ connection required 💪
 
 ---
 
-*Imported from Github etchteam/offline:/experiments/my-first-workbox-cache/*
+*Imported from Github etchteam/offline:/experiments/workbox-cache/*

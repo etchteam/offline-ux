@@ -4,12 +4,12 @@ layout: default.hbs
 
 <div class="article-header">
 
-  # Offline page
+  # Offline fallback pages
 
 </div>
 
 <p class="subtitle">
-  Implementing an offline page should be just as essential as including
+  Implementing an offline fallback page should be just as essential as including
   a 404 page on your website.
 </p>
 
@@ -32,7 +32,7 @@ if a more comprehensive offline experience is going to be out of budget.
 <div class="callout">
   
   **Notice:** This assumes knowledge of service workers and the cache API provided
-  in the [my first cache article](/my-first-cache.html).
+  in the [my first offline website article](/my-first-offline-website.html).
 
 </div>
 

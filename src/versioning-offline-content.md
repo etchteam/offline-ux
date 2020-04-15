@@ -4,7 +4,7 @@ layout: default.hbs
 
 <div class="article-header">
 
-  # Caching content
+  # Versioning offline content
 
 </div>
 
@@ -14,7 +14,7 @@ layout: default.hbs
 </p>
 
 There's still lots of holes in the basic implementation provided in the
-[my first cache](/my-first-cache.html) article, it would be tough to manually
+[my first offline website](/my-first-offline-website.html) article, it would be tough to manually
 maintain the cache and avoid it going stale in any but the simplest of websites.
 
 Luckily there are tools available that make reliably maintaining even the largest
@@ -26,7 +26,7 @@ To start with, lets take the cache we already have and re-implement it. This tim
 the cache is going to be built with [Workbox](https://developers.google.com/web/tools/workbox),
 an open source library from Google.
 
-Here's the service worker code from [my first cache](/my-first-cache.html)...
+Here's the service worker code from [my first offline website](/my-first-offline-website.html)...
 
 ```javascript
 const cacheName = 'offline';

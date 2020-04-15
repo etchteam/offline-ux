@@ -1,4 +1,4 @@
-# Offline page
+# Offline fallback page
 
 Implementing an offline page should be just as essential as including a 404 page
 on your website...
@@ -17,4 +17,4 @@ offline page.
 
 ---
 
-*Imported from Github etchteam/offline:/experiments/offline-page/*
+*Imported from Github etchteam/offline:/experiments/offline-fallback-page/*

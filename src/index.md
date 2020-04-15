@@ -22,35 +22,35 @@ layout: default.hbs
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      My first cache
+      My first offline website
     </h2>
     <p class="articles__item-content">
       Even the most basic cache implementation can simultaneously improve
       performance and enable offline use of any website&hellip;
     </p>
-    <a href="/my-first-cache.html">Read &rarr;</a>
+    <a href="/my-first-offline-website.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      Caching content
+      Versioning offline content
     </h2>
     <p class="articles__item-content">
-      A well implemented cache is fundamental to keeping a website performant and
-      functional despite unreliable connections&hellip;
+      Automate the versioning of your cache to make sure users never see out
+      of date content&hellip;
     </p>
-    <a href="/caching-content.html">Read &rarr;</a>
+    <a href="/versioning-offline-content.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
     <h2 class="articles__item-title">
-      Offline page
+      Offline fallback page
     </h2>
     <p class="articles__item-content">
-      Implementing an offline page should be just as essential as including
+      Implementing an offline fallback page should be just as essential as including
       a 404 page on your website&hellip;
     </p>
-    <a href="/offline-page.html">Read &rarr;</a>
+    <a href="/offline-fallback-page.html">Read &rarr;</a>
   </div>
 
   <div class="articles__item">
