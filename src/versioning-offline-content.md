@@ -96,9 +96,8 @@ in .css, .jpeg or .html (based on the regex). This will handle:
 
 It'll also cleanup stale caches for us too.
 
-[Learn more about other caching strategies](https://developers.google.com/web/tools/workbox/modules/workbox-strategies)
-that Workbox makes available or see
-[this cache in action](https://glitch.com/edit/#!/workbox-cache).
+You can view the working [source code and demo](https://glitch.com/edit/#!/workbox-cache)
+for this cache or learn more about other caching strategies on the [Workbox website](https://developers.google.com/web/tools/workbox/modules/workbox-strategies)
 
 So far, this cache only replicates the functionality of the last one with less
 lines of code. This still leaves the same two big problems:
@@ -138,18 +137,20 @@ self.addEventListener('install', () => {
 });
 ```
 
+The `precacheAndRoute` function is really smart.
+
 With this set up, changing the `revision` property on any of the files will cause
-the cache to update only where the revision has changed. This avoids having to update
-the entire cache when only part of it changes.
+the cache to update **only where the revision has changed**. This avoids having to
+update the entire cache when only part of it changes.
 
 The `precacheAndRoute` function will handle storing all the URLs in the cache and
 setting up individual routes for them using the `CacheFirst` strategy.
 
 Another really handy feature is that it will account for common URL practices, we
-no longer need an extra route for `/` because `precacheAndRoute` is smart enough
+no longer need an extra route for `/` because `precacheAndRoute` will automatically
 to match it to `index.html`.
 
-Great, now we just need a way to automatically updating the revision number when
+Great! Now we just need a way to automatically update the revision number when
 files change.
 
 ## Update caches on detected file changes
@@ -188,10 +189,11 @@ module.exports = {
 
 Workbox suggests using the `workbox generateSW` command from here, this would generate
 the whole service worker for us based on the `workbox-config.js` file but we wouldn't
-have any control over what's output.
+have any control over what it outputs.
 
-We're going to need a bit more control than that, so we can define an `swSrc` inside
-`workbox-config.js` to tell it to use our service worker file as a template...
+We're going to need a bit more control, so we can tell Workbox to use a template
+service worker file instead of creating it's own one by defining an `swSrc` inside
+`workbox-config.js`...
 
 ```javascript
 module.exports = {
@@ -203,6 +205,49 @@ module.exports = {
   "swDest": "service-worker.js"
 };
 ```
+
+The `service-worker-template.js` file doesn't exist yet, let's create it...
+
+```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute(
+  self.__WB_MANIFEST
+);
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+```
+
+Workbox calls the list of files with revision information that go inside `precacheAndRoute`
+a "manifest". Given a template file Workbox will look for `self.__WB_MANIFEST` and
+"inject" the manifest it generates.
+
+Now that we've given Workbox a template file to work with it can be told to generate
+the destination file by using `workbox injectManifest`. The output `service-worker.js`
+file will look something like this...
+
+```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute([
+  {"revision":"13187a99c3b92698b93520df29dc23e4","url":"image.jpeg"},
+  {"revision":"a9b2611a124faa588cee9149e1825eeb","url":"index.html"},
+  {"revision":"5e89a0d14a7ef2ccb7ae86621bd1c84e","url":"styles.css"}
+]);
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+```
+
+Workbox has generated the list of precached files and revision information for
+us 💪. Try updating one of the files and running `workbox injectManifest` again,
+the revision number should automatically change for the file that was updated!
+
+Check out the full [working example](https://glitch.com/edit/#!/workbox-precache) of
+this code.
 
 ## Self updating caches
 
