@@ -17,6 +17,7 @@ body {
   font-size: 18px;
   margin: 0;
   line-height: 1.4;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -85,6 +86,10 @@ img {
 .subtitle {
   margin-top: calc(var(--space-sm) * -1);
   font-size: var(--size-lg);
+}
+
+.arrow-link {
+  font-family: var(--font-code);
 }
 
 @media (min-width: 500px) {
