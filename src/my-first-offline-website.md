@@ -18,9 +18,9 @@ on the webpage shown below can be viewed without any network connection.
 
 ![A basic cache example](/assets/my-first-cache/basic-cache-example.png)
 
-[view demo](https://my-first-cache.glitch.me/)
+[view demo](https://my-first-offline-website.glitch.me/)
 &nbsp; | &nbsp;
-[view code](https://glitch.com/edit/#!/my-first-cache)
+[view code](https://glitch.com/edit/#!/my-first-offline-website)
 &nbsp; | &nbsp;
 [all major browsers except IE](https://caniuse.com/#search=caches)
 

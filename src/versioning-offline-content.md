@@ -98,7 +98,7 @@ It'll also cleanup stale caches for us too.
 
 [Learn more about other caching strategies](https://developers.google.com/web/tools/workbox/modules/workbox-strategies)
 that Workbox makes available or see
-[this cache in action](https://glitch.com/edit/#!/my-first-workbox-cache?path=service-worker.js:15:3).
+[this cache in action](https://glitch.com/edit/#!/workbox-cache).
 
 So far, this cache only replicates the functionality of the last one with less
 lines of code. This still leaves the same two big problems:

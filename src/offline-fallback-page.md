@@ -21,9 +21,9 @@ if a more comprehensive offline experience is going to be out of budget.
 
 ![Custom offline page](/assets/offline-page/offline-page.jpg)
 
-[view demo](https://offline-page.glitch.me/)
+[view demo](https://offline-fallback-page.glitch.me/)
 &nbsp; | &nbsp;
-[view code](https://glitch.com/edit/#!/offline-page)
+[view code](https://glitch.com/edit/#!/offline-fallback-page)
 &nbsp; | &nbsp;
 [all major browsers except IE](https://caniuse.com/#search=caches)
 
@@ -128,8 +128,8 @@ const getPage = event => {
 ```
 
 The website will now serve the custom offline page based on if the user has a
-network connection. Take a look at [the working version of this code](https://glitch.com/edit/#!/custom-offline-page)
-or the [demo](https://custom-offline-page.glitch.me/) to see the offline page in
+network connection. Take a look at [the working version of this code](https://glitch.com/edit/#!/offline-fallback-page)
+or the [demo](https://offline-fallback-page.glitch.me/) to see the offline page in
 action.
 
 ## Adding content
