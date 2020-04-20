@@ -155,12 +155,13 @@ files change.
 
 ## Update caches on detected file changes
 
-The implementation needs to move away manually defining a list of files and revision
-information. It's error prone and will take too much work to maintain in a large
-codebase. The list of files and versions needs to be generated instead.
+The implementation needs to move away from manually defining a list of files and
+revision information. It's error prone and will take too much work to maintain in
+a large codebase. The list of files and versions needs to be generated instead.
 
-Workbox offers a few ways to generate the list of files at build time, the best
-way for this simple cache would be using [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli).
+Workbox offers a few ways to generate the list of files at build time, the simplest
+option is [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli)
+which we'll be using here.
 
 To get started, install the CLI `npm i -g workbox-cli` and run the wizard
 `workbox wizard`...
@@ -187,13 +188,12 @@ module.exports = {
 };
 ```
 
-Workbox suggests using the `workbox generateSW` command from here, this would generate
-the whole service worker for us based on the `workbox-config.js` file but we wouldn't
-have any control over what it outputs.
+This config would work with the `workbox generateSW` command which generates the
+whole service worker for us. In this implementation we only want workbox to generate
+the list of precache files though, not the whole service worker.
 
-We're going to need a bit more control, so we can tell Workbox to use a template
-service worker file instead of creating it's own one by defining an `swSrc` inside
-`workbox-config.js`...
+`workbox-config.js` accepts an `swSrc` property which tells workbox to use a template
+service worker file instead of creating it's own one, let's define that as `service-worker-template.js`...
 
 ```javascript
 module.exports = {
@@ -206,7 +206,12 @@ module.exports = {
 };
 ```
 
-The `service-worker-template.js` file doesn't exist yet, let's create it...
+Workbox calls the list of files with revision information that go inside `precacheAndRoute`
+a "manifest". Given a template file Workbox will look for `self.__WB_MANIFEST` and
+"inject" the manifest it generates.
+
+To create the `service-worker-template.js` file, we can rename the current service
+worker file and update it to replace the list of files with `self.__WB_MANIFEST`...
 
 ```javascript
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
@@ -220,11 +225,7 @@ self.addEventListener('install', () => {
 });
 ```
 
-Workbox calls the list of files with revision information that go inside `precacheAndRoute`
-a "manifest". Given a template file Workbox will look for `self.__WB_MANIFEST` and
-"inject" the manifest it generates.
-
-Now that we've given Workbox a template file to work with it can be told to generate
+Now that Workbox has a template file to work with it can be told to generate
 the destination file by using `workbox injectManifest`. The output `service-worker.js`
 file will look something like this...
 
@@ -253,9 +254,11 @@ this code.
 
 Out of all the content on most websites images are one of the least likely to
 regularly update, they also consume the most cache storage space and are often
-not essential for the website to work.
+less essential for the website to work.
 
-So a sensible approach is to create a separate dedicated image cache.
+If all the images where added as precache files it could be an unnecessary waste
+of limited cache storage space. A better approach is to create a separate dedicated
+image cache with sensible limits.
 
 ## Cache versioning through file names
 
