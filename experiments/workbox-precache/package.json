@@ -5,7 +5,8 @@
   "main": "service-worker.js",
   "scripts": {
     "setup-precache": "workbox wizard",
-    "precache": "workbox injectManifest"
+    "precache": "workbox injectManifest",
+    "start": "serve"
   },
   "keywords": [],
   "author": "Dan Webb <mail@danwebb.co> (https://danwebb.co)",
