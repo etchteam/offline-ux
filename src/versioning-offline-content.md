@@ -292,8 +292,23 @@ self.addEventListener('install', () => {
 });
 ```
 
-Now the image can be removed from the generated precached files by removing `jpg`
-from the `globPatterns` in `workbox-config.js`...
+This will:
+
+1. intercept requests for any image files
+2. attempt to serve the image from the cache
+3. failing that, download and store the image in the cache
+4. remove the oldest cache entry if there are now more than 60 entries
+5. remove entries older than 30 days
+
+<div class="callout">
+  
+  **Remember:** The earliest registered route will be used to respond to requests,
+  the precache is above the image cache, so the precache takes priority.
+
+</div>
+
+Now that we have a dedicated image cache, the image can be removed from the generated
+precache files by removing `jpg` from the `globPatterns` in `workbox-config.js`...
 
 ```javascript
 module.exports = {
