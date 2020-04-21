@@ -8,8 +8,8 @@ with precaching via the Workbox CLI...
 This experiment is part of the [offline UX project](https://offline.etch.now.sh/).
 
 An NPM scripts is available in the `package.json` called `precache` which will use
-the `service-worker-base.js` and `workbox-config.js` files to inject a list of versioned
-files to cache.
+the `service-worker-template.js` and `workbox-config.js` files to inject a list of
+versioned files to cache.
 
 The `service-worker.js` file it generates will store the webpages content on initial
 page load.

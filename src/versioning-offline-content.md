@@ -260,12 +260,60 @@ If all the images where added as precache files it could be an unnecessary waste
 of limited cache storage space. A better approach is to create a separate dedicated
 image cache with sensible limits.
 
+Workbox can automatically swap out items in the cache based on a set of configured
+limits. A common approach for images is to set a maximum number of images that can
+be in the cache at once as well as an expiration time limit...
+
+```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
+const { registerRoute } = workbox.routing;
+const { precacheAndRoute } = workbox.precaching;
+const { CacheFirst } = workbox.strategies;
+const { ExpirationPlugin } = workbox.expiration;
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+registerRoute(
+  /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
+  new CacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+      }),
+    ],
+  })
+);
+
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+```
+
+Now the image can be removed from the generated precached files by removing `jpg`
+from the `globPatterns` in `workbox-config.js`...
+
+```javascript
+module.exports = {
+  "globDirectory": ".",
+  "globPatterns": [
+    "*.{html,css}"
+  ],
+  "swSrc": "service-worker-template.js",
+  "swDest": "service-worker.js"
+};
+```
+
 ## Cache versioning through file names
 
 ## Avoid using the CDN
 
 Currently the Workbox code in the service worker uses a CDN script, the script is
 smart but still adds overhead pulling in the modules it needs.
+
+![Workbox modules](/assets/versioning-offline-content/workbox-modules.png)
 
 A better approach would be to only import the specific modules that are being used,
 this will reduce the overall service worker size and improve how we managing including
