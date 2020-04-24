@@ -14,8 +14,9 @@ layout: default.hbs
 </p>
 
 There's still lots of holes in the basic implementation provided in the
-[my first offline website](/my-first-offline-website.html) article, it would be tough to manually
-maintain the cache and avoid it going stale in any but the simplest of websites.
+[my first offline website](/my-first-offline-website.html) article, it would be
+tough to manually maintain the cache and avoid it going stale in any but the simplest
+of websites.
 
 Luckily there are tools available that make reliably maintaining even the largest
 frequently updating caches manageable.
@@ -139,7 +140,7 @@ self.addEventListener('install', () => {
 
 The `precacheAndRoute` function is really smart.
 
-With this set up, changing the `revision` property on any of the files will cause
+Changing the `revision` property on any of the files will cause
 the cache to update **only where the revision has changed**. This avoids having to
 update the entire cache when only part of it changes.
 
@@ -163,7 +164,7 @@ Workbox offers a few ways to generate the list of files at build time, the simpl
 option is [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli)
 which we'll be using here.
 
-To get started, install the CLI `npm i -g workbox-cli` and run the wizard
+To get started, install the CLI `npm i -g workbox-cli` and run the wizard by using
 `workbox wizard`...
 
 ```bash
@@ -188,12 +189,12 @@ module.exports = {
 };
 ```
 
-This config would work with the `workbox generateSW` command which generates the
-whole service worker for us. In this implementation we only want workbox to generate
-the list of precache files though, not the whole service worker.
+This config only has a destination defined in `swDest`, so it would work with
+the `workbox generateSW` command which generates the whole service worker for us.
 
-`workbox-config.js` accepts an `swSrc` property which tells workbox to use a template
-service worker file instead of creating it's own one, let's define that as `service-worker-template.js`...
+`workbox-config.js` also accepts an `swSrc` property which tells workbox to use a
+template service worker file instead of creating it's own one. We're going to need
+that extra control, so let's define `swSrc` as `service-worker-template.js`...
 
 ```javascript
 module.exports = {
@@ -205,10 +206,6 @@ module.exports = {
   "swDest": "service-worker.js"
 };
 ```
-
-Workbox calls the list of files with revision information that go inside `precacheAndRoute`
-a "manifest". Given a template file Workbox will look for `self.__WB_MANIFEST` and
-"inject" the manifest it generates.
 
 To create the `service-worker-template.js` file, we can rename the current service
 worker file and update it to replace the list of files with `self.__WB_MANIFEST`...
@@ -225,8 +222,11 @@ self.addEventListener('install', () => {
 });
 ```
 
+Given a template file Workbox will look for `self.__WB_MANIFEST` and use it to
+"inject" the list of files with revision information it generates.
+
 Now that Workbox has a template file to work with it can be told to generate
-the destination file by using `workbox injectManifest`. The output `service-worker.js`
+the service worker using `workbox injectManifest`. The output `service-worker.js`
 file will look something like this...
 
 ```javascript
@@ -243,12 +243,9 @@ self.addEventListener('install', () => {
 });
 ```
 
-Workbox has generated the list of precached files and revision information for
+Workbox has generated the list of precache files and revision information for
 us 💪. Try updating one of the files and running `workbox injectManifest` again,
 the revision number should automatically change for the file that was updated!
-
-Check out the full [working example](https://glitch.com/edit/#!/workbox-precache) of
-this code.
 
 ## Self updating caches
 
@@ -256,13 +253,14 @@ Out of all the content on most websites images are one of the least likely to
 regularly update, they also consume the most cache storage space and are often
 less essential for the website to work.
 
-If all the images where added as precache files it could be an unnecessary waste
+If all the images were added as precache files it could be an unnecessary waste
 of limited cache storage space. A better approach is to create a separate dedicated
 image cache with sensible limits.
 
 Workbox can automatically swap out items in the cache based on a set of configured
 limits. A common approach for images is to set a maximum number of images that can
-be in the cache at once as well as an expiration time limit...
+be in the cache at once as well as a time limit using the `ExpirationPlugin` like
+so...
 
 ```javascript
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
@@ -292,18 +290,10 @@ self.addEventListener('install', () => {
 });
 ```
 
-This will:
-
-1. intercept requests for any image files
-2. attempt to serve the image from the cache
-3. failing that, download and store the image in the cache
-4. remove the oldest cache entry if there are now more than 60 entries
-5. remove entries older than 30 days
-
 <div class="callout">
   
   **Remember:** The earliest registered route will be used to respond to requests,
-  the precache is above the image cache, so the precache takes priority.
+  if the precache is above the image cache, the precache takes priority.
 
 </div>
 
@@ -321,15 +311,141 @@ module.exports = {
 };
 ```
 
-## Cache versioning through file names
+Don't forget to re-run `workbox injectManifest` to update the service worker with
+these changes!
 
-## Avoid using the CDN
+Every time an image is viewed the service worker will now:
+
+1. intercept the request
+2. use the `CacheFirst` strategy to serve from the cache or fall back to the network
+3. remove the oldest cache entry if there are now more than 60 entries
+4. remove any entries older than 30 days
+
+## Avoid using the Workbox CDN
 
 Currently the Workbox code in the service worker uses a CDN script, the script is
-smart but still adds overhead pulling in the modules it needs.
+smart because it only includes what it needs, but it still adds overhead.
+
+You might have already noticed this if you looked at the browsers network tab 😬
 
 ![Workbox modules](/assets/versioning-offline-content/workbox-modules.png)
 
-A better approach would be to only import the specific modules that are being used,
-this will reduce the overall service worker size and improve how we managing including
-and versioning the modules.
+Fortunately, Workbox makes its modules available via NPM. Using NPM will bring the
+added benefit of better versioning and security vulnerability detection on top of
+the performance benefits!
+
+Currently the list of included modules looks like this...
+
+```javascript
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+const { registerRoute } = workbox.routing;
+const { precacheAndRoute } = workbox.precaching;
+const { CacheFirst } = workbox.strategies;
+const { ExpirationPlugin } = workbox.expiration;
+```
+
+Workbox modules on NPM follow the same naming format, just swapping the dots for
+hyphens. Let's download all the ones being used...
+
+```bash
+npm i -D workbox-routing workbox-precaching workbox-strategies workbox-expiration
+```
+
+The modules can then be swapped out with import statements. We don't need the `importScripts`
+line anymore either, that was only used to pull in the modules that the service worker
+was using...
+
+```javascript
+import { registerRoute } from 'workbox-routing';
+import { precacheAndRoute } from 'workbox-precaching';
+import { CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
+```
+
+If `workbox injectManifest` is re-run now, the output `service-worker.js` file will
+include these import statements.
+
+Unfortunately, most browsers can't read import statements, we wouldn't want to include
+`node_modules` directly in the website anyway. Instead, the modules should be *bundled*
+into the service worker.
+
+For this example we'll use [Rollup](https://rollupjs.org/guide/en/) to bundle the
+code. That means more NPM installs to get Rollup and all the plugins we're going
+to need...
+
+```bash
+npm i -D rollup @rollup/plugin-node-resolve rollup-plugin-replace rollup-plugin-terser rollup-plugin-workbox
+```
+
+Rollup's job is going to be to take the `service-worker.js` file and change all the
+imports to directly include the code they're referencing.
+
+Using a `rollup.config.js` file we can tell it what to do...
+
+```javascript
+const resolve = require('@rollup/plugin-node-resolve');
+const replace = require('rollup-plugin-replace');
+const { terser } = require('rollup-plugin-terser');
+const { injectManifest } = require('rollup-plugin-workbox');
+const workboxConfig = require('./workbox-config.js')
+
+export default {
+  input: 'service-worker-template.js',
+  output: {
+    dir: 'src',
+    format: 'cjs'
+  },
+  plugins: [
+    injectManifest(workboxConfig),
+    resolve(),
+    replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    terser()
+  ]
+};
+```
+
+This will tell Rollup to take the input file `service-worker-template.js` and run
+it through the list of plugins...
+
+- `injectManifest(workboxConfig)` performs exactly the same action as the
+`workbox injectManifest` command was previously
+- `resolve()` bundles the imports
+- `replace({ 'process.env.NODE_ENV': JSON.stringify('production') })` uses Workbox
+production mode
+
+Seeing as we're doing this for performance `terser()` has been thrown in here to
+minify the code that workbox outputs.
+
+<div class="callout">
+  
+  **Remember:** Every browser that supports service workers also supports most
+  ES2015 features, it's not necessary to include Babel to this stack.
+
+</div>
+
+This config uses the `output` property to tell Workbox to put the final service
+worker file in a `src` folder.
+
+As a final step we should separate the website files from config files by creating
+the `src` folder. Move the `index.html`, `image.jpeg` and `styles.css` to it then
+update the `globDirectory` set in `workbox-config.js`.
+
+Phew! Now if we run `rollup -c` the complete `service-worker.js` file will get output
+in the `src` directory safe to use in the browser.
+
+## Conclusion
+
+Check out the final [working example](https://glitch.com/edit/#!/workbox-precache)
+of the versioned cache.
+
+The cache has been massively improved! Most importantly it can now be sustainably
+maintained with little to no effort.
+
+With the caching and service worker powers acquired so far we're ready to start
+implementing features to attain the *ultimate offline experience*.
+
+<div class="callout">
+  
+  **Next up:** <a href="/offline-fallback-page.html">Offline fallback page &rarr;</a>
+
+</div>

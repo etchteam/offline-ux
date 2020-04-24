@@ -1,7 +1,7 @@
 # Workbox precache
 
 A Workbox implementation of [my first offline-website](https://glitch.com/edit/#!/my-first-offline-website)
-with precaching via the Workbox CLI...
+with precaching via the Workbox CLI & Rollup...
 
 ---
 

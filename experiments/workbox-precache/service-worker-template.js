@@ -1,9 +1,7 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
-
-const { registerRoute } = workbox.routing;
-const { precacheAndRoute } = workbox.precaching;
-const { CacheFirst } = workbox.strategies;
-const { ExpirationPlugin } = workbox.expiration;
+import { registerRoute } from 'workbox-routing';
+import { precacheAndRoute } from 'workbox-precaching';
+import { CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
 
 precacheAndRoute(self.__WB_MANIFEST);
 
