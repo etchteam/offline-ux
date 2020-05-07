@@ -135,10 +135,10 @@ precacheAndRoute(self.__WB_MANIFEST);
 registerRoute(new NavigationRoute(getPage));
 ```
 
-`matchPrecache` is another Workbox helper which will perform `caches.open` and
-`cache.match` on the precache to find the cached version of the `offline.html` page.
+`matchPrecache` is another Workbox helper which will return the cached version of
+the `offline.html` page.
 
-Notice that currently the `NavigationRoute` we've registered is `NetworkFirst`,
+Notice that currently the `NavigationRoute` we've registered is network only,
 if we wanted to serve some HTML pages from the cache instead we would need to either
 add them to the precache or register separate routes for them above where the `NavigationRoute`
 is registered.
