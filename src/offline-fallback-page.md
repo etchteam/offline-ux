@@ -29,13 +29,6 @@ if a more comprehensive offline experience is going to be out of budget.
 
 ## Implementing an offline page
 
-<div class="callout">
-  
-  **Notice:** This assumes knowledge of service workers and the cache API provided
-  in the [my first offline website article](/my-first-offline-website.html).
-
-</div>
-
 Serving a specific page to users that are offline involves three steps:
 
 1. Cache the page
@@ -44,88 +37,111 @@ Serving a specific page to users that are offline involves three steps:
 
 ### Cache the page
 
-As always, the service worker "install" event is the best place to set up the
-cache. On install an offline page (`offline.html`) can be cached...
+A HTML file needs to be created to act as the offline page, we'll call ours `offline.html`
+and fill it with some basic content.
 
-```javascript
-const cacheName = 'offlinePage';
-const offlineUrl = new Request('offline.html', { cache: 'reload' });
-
-const cacheOfflinePage = async () => {
-  const cache = await caches.open(cacheName);
-  return cache.add(offlineUrl);
-};
-
-self.addEventListener('install', event => {
-  event.waitUntil(cacheOfflinePage());
-});
+```html
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head><!-- ... --></head>
+  <body>
+    <h1>Offline mode engaged!</h1>
+    <p>You are viewing the offline version of this website.</p>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js');
+      }
+    </script>
+  </body>
+</html>
 ```
 
-The offline page is safely stored in the cache called "offlinePage", it's now
-ready to be used without requiring a network connection.
+For the page to be always available offline, it needs to be cached on *install* with
+a "cache first" strategy. We learnt in the [versioning offline content](/versioning-offline-content.html)
+article, the best way to do this kind of caching is the workbox precache.
+
+Workbox CLI uses the `workbox-config.js` to decide which files it's going to precache,
+for this example the `offline.html` page will be the only precached file...
+
+```javascript
+module.exports = {
+  "globDirectory": "src",
+  "globPatterns": ["offline.html"],
+  "swSrc": "service-worker-template.js",
+  "swSrc": "service-worker.js",
+};
+```
+
+For now, `service-worker-template.js` can be set up just so Workbox has somewhere
+to output the precache when `workbox injectManifest` is used.
+
+```javascript
+import { precacheAndRoute } from 'workbox-precaching';
+
+precacheAndRoute(self.__WB_MANIFEST);
+```
+
+The `offline.html` will be safely stored in the cache now. Next we need a way to
+send users to the page if they are offline.
 
 ### Try a fetch request
 
+Getting the timing of serving the offline page right is important, interrupting
+users if the network drops whilst they're looking at a page would be annoying!
+
+It's best to delay serving the offline page as long as possible, during the *navigation*
+from one page to another is where a drop in network connection will be most noticeable.
+We should aim to *catch* the user at that point and serve our custom offline page
+instead of the browsers default one.
+
 Every time any network request occurs the browser sends off a `fetch` request,
-including for any images or scripts. For this implementation, it's important the
-offline page is only served when other **pages** are requested...
+including when a new HTML page is requested. Remember how service workers can hijack
+the fetch event to tell it to respond differently? We'll be able to use this to our
+advantage here...
 
 ```javascript
-const getPage = event => {
-  return fetch(event.request);
-};
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute, NavigationRoute } from 'workbox-routing';
 
-self.addEventListener('fetch', event => {
-  if (event.request.mode !== 'navigate') {
-    return;
-  }
+const getPage = event => fetch(event.request);
 
-  event.respondWith(getPage(event));
-});
+precacheAndRoute(self.__WB_MANIFEST);
+registerRoute(new NavigationRoute(getPage));
 ```
 
-`event.request.mode` makes it possible to tell what the request is for, it will
-only be equal to `navigate` when the request is for a HTML webpage.
+If the request is for a HTML page the requests "mode" will be equal to "navigate".
+Under the hood the Workbox `NavigationRoute` helper performs a simple check for us,
+if the requests mode is equal to navigate then `getPage` will be called, all other
+requests will be ignored by the service worker.
 
-If `event.respondWith` is never called then the browser will carry out the
-request as normal. So if the `navigate` check fails it's safe to simply `return`
-and exit the function execution.
+Adding these lines to `service-worker-template.js` won't actually change anything
+for now, but it does separate fetch requests for HTML pages providing somewhere to
+send a different HTML page if the request fails.
 
 ### If the fetch fails, serve the cached page
 
-The `fetch` request will `throw` if it fails, so a `catch` can be added to
-respond with the cached offline page in place of the missing network response...
+The `fetch` request inside the `getPage` function will throw an error if it fails
+due to a lack of network connection. A `catch` can be added to respond with the cached
+offline page in place of the missing network response...
 
 ```javascript
-const getPage = event => {
-  return fetch(event.request).catch(async () => {
-    const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match(offlineUrl);
-    return cachedResponse;
-  });
-};
+import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
+import { registerRoute, NavigationRoute } from 'workbox-routing';
+
+const getPage = event => fetch(event.request)
+  .catch(() => matchPrecache('/offline.html'));
+
+precacheAndRoute(self.__WB_MANIFEST);
+registerRoute(new NavigationRoute(getPage));
 ```
 
-An important distinction to notice here is that we only need to react when a
-**network request fails**, this is different to the
-[my first cache implementation](/my-first-cache.html) where the contents
-of the cache is read before the network request occurs. So the two solutions
-could be implemented at the same time...
+`matchPrecache` is another Workbox helper which will perform `caches.open` and
+`cache.match` on the precache to find the cached version of the `offline.html` page.
 
-```javascript
-const getPage = event => {
-  const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(request);
-
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-
-  return fetch(event.request).catch(async () => {
-    return await cache.match(offlineUrl);
-  });
-};
-```
+Notice that currently the `NavigationRoute` we've registered is `NetworkFirst`,
+if we wanted to serve some HTML pages from the cache instead we would need to either
+add them to the precache or register separate routes for them above where the `NavigationRoute`
+is registered.
 
 The website will now serve the custom offline page based on if the user has a
 network connection. Take a look at [the working version of this code](https://glitch.com/edit/#!/offline-fallback-page)
