@@ -66,6 +66,10 @@ h2 + p {
 a {
   color: var(--color-azuri);
   text-decoration: none;
+
+  &:hover {
+    border-bottom: 1px solid var(--color-azuri);
+  }
 }
 
 ul, ol {

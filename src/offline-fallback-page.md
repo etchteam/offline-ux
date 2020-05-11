@@ -68,7 +68,7 @@ module.exports = {
   "globDirectory": "src",
   "globPatterns": ["offline.html"],
   "swSrc": "service-worker-template.js",
-  "swSrc": "service-worker.js",
+  "swDest": "service-worker.js",
 };
 ```
 
@@ -81,7 +81,7 @@ import { precacheAndRoute } from 'workbox-precaching';
 precacheAndRoute(self.__WB_MANIFEST);
 ```
 
-The `offline.html` will be safely stored in the cache now. Next we need a way to
+The `offline.html` can be safely stored in the cache now. Next we need a way to
 send users to the page if they are offline.
 
 ### Try a fetch request
@@ -109,10 +109,10 @@ precacheAndRoute(self.__WB_MANIFEST);
 registerRoute(new NavigationRoute(getPage));
 ```
 
-If the request is for a HTML page the requests "mode" will be equal to "navigate".
-Under the hood the Workbox `NavigationRoute` helper performs a simple check for us,
-if the requests mode is equal to navigate then `getPage` will be called, all other
-requests will be ignored by the service worker.
+Under the hood, the Workbox `NavigationRoute` helper filters requests based on if
+the [requests "mode" is equal to "navigate"](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode).
+This means any requests for a HTML page will be picked up by the route and in this
+case call the `getPage` function.
 
 Adding these lines to `service-worker-template.js` won't actually change anything
 for now, but it does separate fetch requests for HTML pages providing somewhere to
@@ -120,9 +120,12 @@ send a different HTML page if the request fails.
 
 ### If the fetch fails, serve the cached page
 
-The `fetch` request inside the `getPage` function will throw an error if it fails
-due to a lack of network connection. A `catch` can be added to respond with the cached
-offline page in place of the missing network response...
+The final piece of the puzzle is working out how to detect if the request fails
+due to a connection issue so that the offline page can be served. Luckily,
+the `fetch` request will `throw` an error if it fails which makes this quite simple.
+
+A `catch` can be added to respond with the cached offline page in place of the
+missing network response...
 
 ```javascript
 import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
@@ -135,10 +138,10 @@ precacheAndRoute(self.__WB_MANIFEST);
 registerRoute(new NavigationRoute(getPage));
 ```
 
-`matchPrecache` is another Workbox helper which will return the cached version of
-the `offline.html` page.
+`matchPrecache` is another Workbox helper which will search the precache and return
+the current cached version of the URL it's given.
 
-Notice that currently the `NavigationRoute` we've registered is network only,
+Notice that currently the `NavigationRoute` we've registered is "network only",
 if we wanted to serve some HTML pages from the cache instead we would need to either
 add them to the precache or register separate routes for them above where the `NavigationRoute`
 is registered.
@@ -197,8 +200,9 @@ page.
 ![Articles available to view offline](/assets/offline-page/offline-posts.jpg)
 
 Popularised by the Chrome dinosaur game, A growing number of websites have taken
-this literally by presenting some type of game to interact with whilst on the page
-completely separate to the rest of the websites content.
+the idea of giving users something to do literally by presenting some type of game
+to interact with whilst on the page, completely separate to the rest of the websites
+content.
 
 While this is fun, in many cases it's unrealistic to expect that it would be part
 of a production projects budget. It's also more than likely not the most valuable
@@ -226,8 +230,8 @@ later reading.
 If the page contains interactive elements the user would expect these to work
 normally, unless they're given visual indication otherwise.
 
-Popular web apps like [Trello](https://trello.com/) can sync a users actions once
-they're back online. This is made possible through [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
+Many popular web apps can sync a users actions once they're back online. This is
+made possible through [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
 or offline compatible databases like [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Concepts_Behind_IndexedDB).
 
 If implementing this type of sync is out of scope then interactive elements of
@@ -258,12 +262,11 @@ easy way to pick up where they left off once the connection has been recovered.
 
 ## Conclusion
 
-The offline page works well as a fallback when a page can't be served due to
-connectivity issues. It provides a nice safety net where we can control what
-the user sees when they're offline and a simple version can be implemented quickly
-enough that it could be added to any project.
+The offline page provides a nice safety net where we can control what
+the user sees when they're offline. A simple version can be implemented quickly
+enough that it could be added to any project and immediately benefit Offline
+User Experience.
 
-Looking beyond the offline page, ideally we shouldn't need to fall back to it at
-all. The ultimate offline experience would be if the whole website worked without
-a connection, then we wouldn't need to fall back to an offline page and users
-could carry on relatively uninterrupted!
+Looking beyond the offline page, ideally we should only need to fall back to it as
+a last resort. The ultimate offline experience would be if the whole website worked
+without a connection.
