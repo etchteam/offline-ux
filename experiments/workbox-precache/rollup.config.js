@@ -6,7 +6,7 @@ import { injectManifest } from 'rollup-plugin-workbox';
 import workboxConfig from './workbox-config.js';
 
 export default [{
-  input: 'service-worker-template.js',
+  input: 'src/service-worker.js',
   output: { dir: 'dist', format: 'cjs' },
   plugins: [injectManifest(workboxConfig)]
 }, {
@@ -16,8 +16,6 @@ export default [{
     resolve(),
     replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
     terser(),
-    copy({
-      targets: [{ src: 'src/*', dest: 'dist/' }]
-    })
+    copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })
   ]
 }];

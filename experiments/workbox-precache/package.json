@@ -5,7 +5,7 @@
   "main": "service-worker.js",
   "scripts": {
     "setup-precache": "workbox wizard",
-    "precache": "rollup -c",
+    "build": "rollup -c",
     "start": "serve dist"
   },
   "keywords": [],

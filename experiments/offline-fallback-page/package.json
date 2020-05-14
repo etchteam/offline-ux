@@ -5,7 +5,7 @@
   "main": "service-worker.js",
   "scripts": {
     "precache": "rollup -c",
-    "start": "serve dist"
+    "build": "serve dist"
   },
   "keywords": [],
   "author": "Dan Webb <dan@etch.co> (https://etch.co)",
