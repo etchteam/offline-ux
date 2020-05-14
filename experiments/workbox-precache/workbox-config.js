@@ -1,8 +1,8 @@
-module.exports = {
+export default {
   "globDirectory": "src",
   "globPatterns": [
     "*.{html,css}"
   ],
   "swSrc": "service-worker-template.js",
-  "swDest": "service-worker.js"
+  "swDest": "dist/service-worker.js"
 };
