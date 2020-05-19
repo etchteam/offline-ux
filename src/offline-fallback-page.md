@@ -13,13 +13,16 @@ layout: default.hbs
   a 404 page on your website.
 </p>
 
-Nearly all websites can benefit from displaying an offline page, instead of the generic
-one included with browsers.
+An "offline fallback page" is a webpage that displays when a user looses connection
+and moves offline. Most browsers ship with their own generic offline page but it's
+possible to replace this with a custom offline page.
 
-It's simple enough to implement as a good fallback option on any project, even
-if a more comprehensive offline experience is going to be out of budget.
+Nearly all websites can benefit from displaying a custom offline page instead of
+the generic one included with browsers. It's simple enough to implement as a good
+fallback option on any project, even if a more comprehensive offline experience
+is going to be out of budget.
 
-![Custom offline page](/assets/offline-page/offline-page.jpg)
+![Generic offline page](/assets/offline-page/offline.png)
 
 [view demo](https://offline-fallback-page.glitch.me/)
 &nbsp; | &nbsp;
@@ -31,11 +34,11 @@ if a more comprehensive offline experience is going to be out of budget.
 
 Serving a specific page to users that are offline involves three steps:
 
-1. Cache the page
+1. Cache the offline page
 2. Try a fetch request
 3. If the fetch fails, serve the cached page
 
-### Cache the page
+### Cache the offline page
 
 A HTML file needs to be created to act as the offline page, we'll call ours `offline.html`
 and fill it with some basic content.
@@ -61,7 +64,7 @@ a "cache first" strategy. We learnt in the [versioning offline content](/version
 article, the best way to do this kind of caching is the workbox precache.
 
 Workbox CLI uses the `workbox-config.js` to decide which files it's going to precache,
-for this example the `offline.html` page will be the only precached file...
+for this example the `offline.html` page will be the only precached file&hellip;
 
 ```javascript
 module.exports = {
@@ -97,7 +100,7 @@ instead of the browsers default one.
 Every time any network request occurs the browser sends off a `fetch` request,
 including when a new HTML page is requested. Remember how service workers can hijack
 the fetch event to tell it to respond differently? We'll be able to use this to our
-advantage here...
+advantage here&hellip;
 
 ```javascript
 import { precacheAndRoute } from 'workbox-precaching';
@@ -125,7 +128,7 @@ due to a connection issue so that the offline page can be served. Luckily,
 the `fetch` request will `throw` an error if it fails which makes this quite simple.
 
 A `catch` can be added to respond with the cached offline page in place of the
-missing network response...
+missing network response&hellip;
 
 ```javascript
 import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
@@ -264,7 +267,7 @@ easy way to pick up where they left off once the connection has been recovered.
 
 The offline page provides a nice safety net where we can control what
 the user sees when they're offline. A simple version can be implemented quickly
-enough that it could be added to any project and immediately benefit Offline
+enough that it could be added to any project and immediately benefit the Offline
 User Experience.
 
 Looking beyond the offline page, ideally we should only need to fall back to it as

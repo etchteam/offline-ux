@@ -38,6 +38,10 @@ pre[class*='language-'] {
   color: var(--color-emperor);
 }
 
+.token.comment {
+  color: var(--color-silver);
+}
+
 .token.function, .token.tag, .token.class-name, .token.number {
   color: var(--color-razzmatazz);
 }

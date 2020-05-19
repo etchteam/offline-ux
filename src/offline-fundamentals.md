@@ -4,7 +4,7 @@ layout: default.hbs
 
 <div class="article-header">
 
-  # My first offline website
+  # Offline fundamentals
 
 </div>
 
@@ -37,7 +37,7 @@ For now, creating a service worker is as simple as adding a new Javascript file
 to your project. We'll call it `service-worker.js` but it can be called anything.
 
 To make the browser aware of the `service-worker.js` file it needs to be registered,
-most of the time this code is set up to be called whenever a page loads...
+most of the time this code is set up to be called whenever a page loads&hellip;
 
 ```html
 <script>
@@ -65,14 +65,14 @@ navigate to the application tab, it would show that the service worker gets regi
 ## Add content to the cache
 
 Now, code can be added to the `service-worker.js` to create our very own cache!
-To start with the cache API will need to be given...
+To start with the cache API will need to be given a&hellip;
 
-- Name: what we're going to call this cache
-- Location: where are the files that we want to cache
+- Name &mdash; what we're going to call this cache
+- Location &mdash; where are the files that we want to cache
 
 This basic cache will be called "offline", it will contain the HTML, CSS and image
 used in the example web page above. For now these can be added as variables at
-the top of the file...
+the top of the file&hellip;
 
 ```javascript
 const cacheName = 'offline';
@@ -85,7 +85,7 @@ cache isn't used when the browser requests this asset.
 
 Service workers have an "install" event which can be used to initiate the cache,
 it'll be called once per service worker installation, the perfect time to start
-adding to the cache...
+adding to the cache&hellip;
 
 ```javascript
 const cacheResources = async () => {
@@ -113,9 +113,9 @@ install and will be discarded instead.
 
 </div>
 
-The dependant files and URLs are now in the cache 🎉...But loading this page offline
-still uses the network and the assets won't load. An extra step is needed to
-tell the browser when it should use the cache.
+The dependant files and URLs are now in the cache 🎉&hellip;But loading this page
+offline still uses the network and the assets won't load. An extra step is needed
+to tell the browser when it should use the cache.
 
 ## Use the cache, not the network
 
@@ -123,7 +123,7 @@ This is where the service worker super power of being able to watch whenever a n
 request occurs comes in handy, this is the key to serving the contents from the cache
 instead of using network requests.
 
-The service workers "fetch" event can be used to hijack any network requests...
+The service workers "fetch" event can be used to hijack any network requests&hellip;
 
 ```javascript
 const getResponse = async request => {
@@ -176,7 +176,7 @@ worker become the active one.
 This is the default behaviour of service workers, in many cases immediately
 activating a new version of a service worker whilst a user is browsing could cause
 things to break. In this case though the new content should appear straight away,
-the waiting phase can be skipped by adding an extra line to the "install" event handler...
+the waiting phase can be skipped by adding an extra line to the "install" event handler&hellip;
 
 ```javascript
 self.addEventListener('install', event => {
@@ -189,7 +189,7 @@ The new content is now appearing from a new cache when `cacheName` is changed. B
 what happened to the old cache? It's dead but still lingering like a ghost that
 gobbles up data storage limits.
 
-We should cleanup after ourselves and not leave stale caches lying around...
+We should cleanup after ourselves and not leave stale caches lying around&hellip;
 
 ```javascript
 const cleanup = async () => {
@@ -229,8 +229,4 @@ of production software will be needed.
 This goes beyond a basic cache implementation, the network needs to *enhance*
 the stale contents of the cache to build off this implementation.
 
-<div class="callout">
-  
-  **Next up:** <a href="/versioning-offline-content.html">Versioning offline content &rarr;</a>
-
-</div>
+**Next up:** <a href="/versioning-offline-content.html" class="arrow-link">Versioning offline content &xrarr;</a>

@@ -68,7 +68,7 @@ a {
   text-decoration: none;
 
   &:hover {
-    border-bottom: 1px solid var(--color-azuri);
+    text-decoration: underline;
   }
 }
 
