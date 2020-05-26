@@ -46,6 +46,10 @@ layout: default.hbs
     <h2 class="articles__item-title">
       Offline workflow
     </h2>
+    <p class="articles__item-content">
+      Reduce service worker startup times and automate generating caches at
+      build time to avoid manual effort and human error&hellip;
+    </p>
     <a href="/offline-workflow.html" class="arrow-link">Read &xrarr;</a>
   </div>
 

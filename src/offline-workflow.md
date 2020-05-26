@@ -8,23 +8,50 @@ layout: default.hbs
 
 </div>
 
-## Why bother?
+<p class="subtitle">
+  The ultimate offline user experience wouldn't be complete without accounting
+  for the experience of the developer.
+</p>
 
-- reduce startup cost of the service worker by moving away from the CDN
-- automate generating precaches at build time based on files to avoid human error
+Maintaining offline content and service worker code shouldn't take manual effort
+or become a messy process for developers. If it does we'd be risking future errors
+creeping in, or the offline experience becoming too costly to keep in place.
 
-## Avoid using the Workbox CDN
+By adding an automated build step into the workflow, we can reduce service worker
+startup times and automate generating caches at build time to avoid manual effort
+and human error.
 
-Currently the Workbox code in the service worker uses a CDN script, the script is
-smart because it only includes what it needs, but it still adds overhead.
+## We've got problems
 
-You might have already noticed this if you looked at the browsers network tab 😬
+The [implementation so far](/versioning-offline-content.html) has two problems.
 
-![Workbox modules](/assets/versioning-offline-content/workbox-modules.png)
+Firstly, developers have to remember to call `workbox injectManifest` to update
+the precache, every single time. This might not seem like much, but it'd be easy
+to forget and the consequence for forgetting would lead to out of date content
+being served which should never ever happen.
+
+The second problem is less obvious, but you might have already noticed it if you
+looked at the browsers network tab 😬
+
+![Workbox modules](/assets/offline-workflow/workbox-modules.png)
+
+Currently, the Workbox code in the service worker uses a CDN script, the script is
+smart because it only includes what it needs, but it still adds overhead. Pulling
+the scripts down from the network increase the service workers startup time and
+reliance on the network.
+
+We could just inline all the library code into the service worker file ourself,
+doing so would not only cause a huge unruly unmaintainable mess in the service
+worker file but also make handling versions of the library code very difficult.
 
 Fortunately, Workbox makes its modules available via NPM. Using NPM will bring the
 added benefit of better versioning and security vulnerability detection on top of
 the performance benefits!
+
+Let's look at how using a build step can automate calling `workbox injectManifest`
+at the same time as enabling use of Workbox modules from NPM.
+
+## The build step
 
 Currently the list of included modules looks like this&hellip;
 

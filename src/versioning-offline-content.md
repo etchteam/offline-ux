@@ -332,7 +332,7 @@ Every time an image is viewed the service worker will now:
 Smart! That'll avoid using all our available cache storage on images the user
 isn't even looking at.
 
-## Conclusion
+## Cache invalidation solved
 
 Check out the final [working example](https://glitch.com/edit/#!/workbox-precache)
 of the versioned cache.
