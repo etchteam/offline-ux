@@ -21,14 +21,14 @@ By adding an automated build step into the workflow, we can reduce service worke
 startup times and automate generating caches at build time to avoid manual effort
 and human error.
 
-## We've got problems
+## Problems with the current workflow
 
 The [implementation so far](/versioning-offline-content.html) has two problems.
 
 Firstly, developers have to remember to call `workbox injectManifest` to update
 the precache, every single time. This might not seem like much, but it'd be easy
 to forget and the consequence for forgetting would lead to out of date content
-being served which should never ever happen.
+being served.
 
 The second problem is less obvious, but you might have already noticed it if you
 looked at the browsers network tab 😬
@@ -48,10 +48,57 @@ Fortunately, Workbox makes its modules available via NPM. Using NPM will bring t
 added benefit of better versioning and security vulnerability detection on top of
 the performance benefits!
 
-Let's look at how using a build step can automate calling `workbox injectManifest`
+Let's look at how through using a build step we can automate calling `workbox injectManifest`
 at the same time as enabling use of Workbox modules from NPM.
 
 ## The build step
+
+It's important to plan out the build step before diving in, it can get complicated
+so nailing down specific outcomes will help keep our efforts focussed.
+
+A good build step clearly separates config files, editable source files and built
+distributed files.
+
+Hopefully, we'll be able to maintain an organised folder structure with config
+files in the root, source files in the `src` directory and built distributed files
+in the `dist` directory. We can start representing this structure by moving the source
+files including the service worker template file into a `src` directory and leaving
+`workbox-config.js` in the root&hellip;
+
+```bash
+|- src/
+|  |- service-worker.js
+|  |- styles.css
+|  |- index.html
+|  |- image.jpeg
+|- workbox-config.js
+```
+
+Then `workbox-config.js` can be updated to match the new folder structure&hellip;
+
+```javascript
+export default {
+  "globDirectory": "src",
+  "globPatterns": ["*.{html,css}"],
+  "swSrc": "src/service-worker.js",
+  "swDest": "dist/service-worker.js"
+};
+```
+
+## Automate generating caches at build time
+
+Workbox has an integration for most popular build tools and frameworks, the build
+tool this example is going to use is [Rollup](https://rollupjs.org/guide/en/),
+the Workbox plugin for Rollup uses the same configuration options as Workbox. So,
+it'll allow us to mostly keep the same setup.
+
+To start off we'll need to download Rollup and the Rollup workbox plugin from NPM&hellip;
+
+```bash
+npm i -D rollup rollup-plugin-workbox
+```
+
+
 
 Currently the list of included modules looks like this&hellip;
 
