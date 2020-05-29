@@ -1,8 +1,12 @@
 .callout {
-  background: var(--color-concrete);
-  border: 1px solid var(--color-mercury);
+  border-left: 1px solid var(--color-purple);
   margin-top: var(--space);
   padding: var(--space);
+
+  &.callout--background {
+    border: none;
+    background: var(--color-light-purple)
+  }
 
   & p {
     margin: 0;

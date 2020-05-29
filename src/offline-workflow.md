@@ -17,13 +17,13 @@ Maintaining offline content and service worker code shouldn't take manual effort
 or become a messy process for developers. If it does we'd be risking future errors
 creeping in, or the offline experience becoming too costly to keep in place.
 
-By adding an automated build step into the workflow, we can reduce service worker
-startup times and automate generating caches at build time to avoid manual effort
-and human error.
+By adding an automated build step into the workflow, we can **reduce service worker
+startup times** and automate generating caches at build time to **avoid manual effort
+and human error**.
 
-## Problems with the current workflow
+## The current workflow
 
-The [implementation so far](/versioning-offline-content.html) has two problems.
+Using the [implementation so far](/versioning-offline-content.html) we have two problems.
 
 Firstly, developers have to remember to call `workbox injectManifest` to update
 the precache, every single time. This might not seem like much, but it'd be easy
@@ -41,7 +41,7 @@ the scripts down from the network increase the service workers startup time and
 reliance on the network.
 
 We could just inline all the library code into the service worker file ourself,
-doing so would not only cause a huge unruly unmaintainable mess in the service
+doing so would not only cause a huge unmaintainable mess in the service
 worker file but also make handling versions of the library code very difficult.
 
 Fortunately, Workbox makes its modules available via NPM. Using NPM will bring the
@@ -53,17 +53,14 @@ at the same time as enabling use of Workbox modules from NPM.
 
 ## The build step
 
-It's important to plan out the build step before diving in, it can get complicated
+It's important to plan out a build step before diving in, it can get complicated
 so nailing down specific outcomes will help keep our efforts focussed.
 
-A good build step clearly separates config files, editable source files and built
-distributed files.
-
-Hopefully, we'll be able to maintain an organised folder structure with config
-files in the root, source files in the `src` directory and built distributed files
-in the `dist` directory. We can start representing this structure by moving the source
-files including the service worker template file into a `src` directory and leaving
-`workbox-config.js` in the root&hellip;
+To maintain an organised folder structure the config files will be in the root,
+source files in the `src` directory and built distributed files in the `dist` directory.
+We can start representing this structure by moving the source files including the
+service worker template file into a `src` directory and leaving `workbox-config.js`
+in the root&hellip;
 
 ```bash
 |- src/
@@ -74,7 +71,7 @@ files including the service worker template file into a `src` directory and leav
 |- workbox-config.js
 ```
 
-Then `workbox-config.js` can be updated to match the new folder structure&hellip;
+Our `workbox-config.js` file will need to be updated to match this new folder structure&hellip;
 
 ```javascript
 export default {
@@ -85,22 +82,81 @@ export default {
 };
 ```
 
+We still need a build tool to do the heavy lifting for us, the basic requirements
+for whatever tools is chosen is that it can&hellip;
+
+1. Automate generating caches with Workbox
+2. Bundle in the Workbox NPM modules
+3. Move any other source files into the dist directory
+
+Workbox has an integration for most popular build tools and frameworks, this example
+is going to use [Rollup](https://rollupjs.org/guide/en/). The Workbox plugin
+for Rollup uses the same configuration options as Workbox, this is good because
+it'll allow us to keep the existing Workbox config setup.
+
 ## Automate generating caches at build time
 
-Workbox has an integration for most popular build tools and frameworks, the build
-tool this example is going to use is [Rollup](https://rollupjs.org/guide/en/),
-the Workbox plugin for Rollup uses the same configuration options as Workbox. So,
-it'll allow us to mostly keep the same setup.
+The first job of the build step is to call `workbox injectManifest` automatically
+when a file changes, it shouldn't be something we need to consciously remember to
+call.
 
-To start off we'll need to download Rollup and the Rollup workbox plugin from NPM&hellip;
+To start off, we'll need to pull down Rollup and the Rollup Workbox plugin from NPM&hellip;
 
 ```bash
-npm i -D rollup rollup-plugin-workbox
+npm init -y && npm i -D rollup rollup-plugin-workbox
 ```
 
+Creating a `rollup.config.js` file in the project root directory we can tell Rollup
+what to do&hellip;
 
+```javascript
+import { injectManifest } from 'rollup-plugin-workbox';
+import workboxConfig from './workbox-config.js';
 
-Currently the list of included modules looks like this&hellip;
+export default [
+  // Generate the service worker
+  {
+    input: 'src/service-worker.js',
+    output: { dir: 'dist', format: 'cjs' },
+    plugins: [injectManifest(workboxConfig)]
+  }
+];
+```
+
+Here we're taking the `input` file which is the service worker template in the
+`src` directory, telling rollup to send any output files to a `dist` directory.
+
+When Rollup is run, the `injectManifest` plugin will perform exactly
+the same action as `workbox injectManifest` did previously. The Workbox
+config which is passed in gets imported directly from the `workbox-config.js` file.
+
+To tell Rollup to run a "build" NPM script can be set up in `package.json`&hellip;
+
+```json
+"scripts": {
+  "build": "rollup --config",
+}
+```
+
+<div class="callout">
+
+  **Note:** Using the `--config` flag here will make Rollup use our `rollup.config.js`
+  file.
+
+</div>
+
+Putting `npm run build` in the terminal will&hellip;
+
+1. Create the `dist` directory
+2. Populate the precache with the *injected* manifest
+3. Output the final service worker file in the `dist` directory
+
+Now to tackle those Workbox module imports!
+
+## Bundle in the Workbox NPM modules
+
+Currently the list of included modules inside `src/service-worker.js` looks like
+this&hellip;
 
 ```javascript
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
@@ -111,7 +167,7 @@ const { ExpirationPlugin } = workbox.expiration;
 ```
 
 Workbox modules on NPM follow the same naming format, just swapping the dots for
-hyphens. Let's download all the ones being used&hellip;
+hyphens. Let's pull in all the modules being used&hellip;
 
 ```bash
 npm i -D workbox-routing workbox-precaching workbox-strategies workbox-expiration
@@ -128,45 +184,25 @@ import { CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 ```
 
-If `workbox injectManifest` is re-run now, the output `service-worker.js` file will
+If `npm run build` is re-run now, the output `service-worker.js` file will
 include these import statements.
 
 Unfortunately, most browsers can't read import statements, we wouldn't want to include
 `node_modules` directly in the website anyway. Instead, the modules should be *bundled*
-into the service worker using a *build* step.
+into the service worker.
 
-For this example we'll use [Rollup](https://rollupjs.org/guide/en/) to bundle the
-code. That means more NPM installs to get Rollup and all the plugins we're going
-to need&hellip;
+That means more NPM installs for the Rollup plugins we're going to need&hellip;
 
 ```bash
-npm i -D rollup @rollup/plugin-node-resolve @rollup/plugin-replace rollup-plugin-copy rollup-plugin-terser rollup-plugin-workbox
+npm i -D @rollup/plugin-node-resolve @rollup/plugin-replace
 ```
 
-During the build step, Rollup is going to take the `service-worker.js` file and change
-all the imports to directly include the code they're referencing.
-
-A good build step clearly separates config files in the root directory, from website
-source files in the src directory and the built distributed files in the dist directory.
-Let's start by updating the `workbox-config.js` to match that structure&hellip;
-
-```javascript
-export default {
-  "globDirectory": "src",
-  "globPatterns": ["*.{html,css}"],
-  "swSrc": "src/service-worker.js",
-  "swDest": "dist/service-worker.js"
-};
-```
-
-Creating a `rollup.config.js` file in the project root directory we can tell Rollup
-what to do&hellip;
+During the build step, Rollup is going to need to take the `service-worker.js` file
+and change all the imports to directly include the code they're referencing&hellip;
 
 ```javascript
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import copy from 'rollup-plugin-copy';
-import { terser } from 'rollup-plugin-terser';
 import { injectManifest } from 'rollup-plugin-workbox';
 import workboxConfig from './workbox-config.js';
 
@@ -177,33 +213,29 @@ export default [
     output: { dir: 'dist', format: 'cjs' },
     plugins: [injectManifest(workboxConfig)]
   },
-  // bundle imports, minify and copy the rest of the files into the dist dir
+  // bundle imports
   {
     input: 'dist/service-worker.js',
     output: { dir: 'dist', format: 'cjs' },
     plugins: [
       resolve(),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      terser(),
-      copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })
     ]
   }
 ];
 ```
 
-Rollup will take the input service worker files and run them through the list of
-plugins&hellip;
+The build step now has two stages, generating the service worker file and then
+bundling the imports in the output service worker file.
 
-- `injectManifest(workboxConfig)` performs exactly the same action as the
-`workbox injectManifest` command was previously, but this time it'll output `service-worker.js`
-in the dist folder.
-- `resolve()` bundles the imports
-- `replace({ 'process.env.NODE_ENV': JSON.stringify('production') })` uses Workbox
-production mode
-- `terser()` minifies the code that workbox outputs, a good idea seeing as we're
-doing this for performance
-- `copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })` will move all the files
-within the /src directory to the /dist directory
+In the second step, Rollup will take the input service worker files and run them
+through the list of plugins.
+
+`resolve` bundles the imports, inlining the code within them.
+
+`replace`, with the options it's been provided, will run through all the code in
+the service worker file and replace any occurrences of `process.env.NODE_ENV` with
+`production` making Workbox use production mode.
 
 <div class="callout">
   
@@ -212,15 +244,19 @@ within the /src directory to the /dist directory
 
 </div>
 
-This config uses the `output` property to tell Workbox to put the final service
-worker file in the `dist` folder which will overwrite the one that workbox generates.
+Phew! now if we run `npm run build` the complete `service-worker.js` file will
+get output in the `dist` directory safe to use in the browser.
 
-As a final step we should separate the website files from config files by creating
-the `src` folder. Move the `index.html`, `image.jpeg` and `styles.css` to it then
-update the `globDirectory` set in `workbox-config.js`.
+## Move the source files & bonus improvements
 
-Phew! Now if we run `rollup -c` the complete `service-worker.js` file will get output
-in the `dist` directory safe to use in the browser.
+```bash
+npm i -D rollup-plugin-copy rollup-plugin-terser
+```
+
+- `terser()` minifies the code that workbox outputs, a good idea seeing as we're
+doing this for performance
+- `copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })` will move all the files
+within the /src directory to the /dist directory
 
 ## Conclusion
 

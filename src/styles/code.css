@@ -1,4 +1,5 @@
 code {
+  background: var(--color-light-purple);
   font-family: var(--font-code);
   font-size: 0.875em;
   line-height: 1.5em;

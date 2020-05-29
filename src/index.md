@@ -7,7 +7,7 @@ layout: default.hbs
   enhancement techniques and the achieving the best offline web experiences.
 </p>
 
-<div class="callout">
+<div class="callout callout--background">
   <strong>Beta notice:</strong> This project is in active development,
   <a href="mailto:ask@etch.co">Let us know</a><br/> if you're interested.
 </div>
