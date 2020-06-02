@@ -124,13 +124,13 @@ export default [
 ```
 
 Here we're taking the `input` file which is the service worker template in the
-`src` directory, telling rollup to send any output files to a `dist` directory.
+`src` directory and telling rollup to send any output files to a `dist` directory.
 
 When Rollup is run, the `injectManifest` plugin will perform exactly
 the same action as `workbox injectManifest` did previously. The Workbox
 config which is passed in gets imported directly from the `workbox-config.js` file.
 
-To tell Rollup to run a "build" NPM script can be set up in `package.json`&hellip;
+To tell Rollup to do its thing, a "build" NPM script can be set up in `package.json`&hellip;
 
 ```json
 "scripts": {
@@ -247,20 +247,74 @@ the service worker file and replace any occurrences of `process.env.NODE_ENV` wi
 Phew! now if we run `npm run build` the complete `service-worker.js` file will
 get output in the `dist` directory safe to use in the browser.
 
-## Move the source files & bonus improvements
+## Move the source files to the dist directory
+
+The `service-worker.js` file now get's output in the `dist` directory but all the
+other website files are still left behind in the `src` directory. The `dist` directory
+is what is going to end up being served to end users so it needs to contain all the
+production website files.
+
+Rollup has a plugin to copy files between directories, while we're here a bonus
+improvement could be thrown in, the `service-worker.js` file could be smaller if
+its contents were minified.
+
+You guessed it, this means more NPM installs!
 
 ```bash
 npm i -D rollup-plugin-copy rollup-plugin-terser
 ```
 
-- `terser()` minifies the code that workbox outputs, a good idea seeing as we're
-doing this for performance
-- `copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })` will move all the files
-within the /src directory to the /dist directory
+`terser()` minifies the code that workbox outputs, a good idea to further
+reduce service worker startup times
 
-## Conclusion
+`copy()` takes a target source and destination directories to copy files over
+to the destination
 
-With the caching and service worker powers acquired so far we're ready to start
-implementing features to attain the *ultimate offline experience*.
+The plugins can be imported and included in `rollup.config.js` to complete our
+build step&hellip;
+
+```javascript
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import copy from 'rollup-plugin-copy';
+import { terser } from 'rollup-plugin-terser';
+import { injectManifest } from 'rollup-plugin-workbox';
+import workboxConfig from './workbox-config.js';
+
+export default [{
+  input: 'src/service-worker.js',
+  output: { dir: 'dist', format: 'cjs' },
+  plugins: [injectManifest(workboxConfig)]
+}, {
+  input: 'dist/service-worker.js',
+  output: { dir: 'dist', format: 'cjs' },
+  plugins: [
+    resolve(),
+    replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    terser(),
+    copy({ targets: [{ src: 'src/*', dest: 'dist/' }] })
+  ]
+}];
+```
+
+## Solid foundations
+
+Here's a [working example](https://glitch.com/edit/#!/workbox-precache) to see
+all we've been talking about brought together.
+
+With the build step complete we now get the following with zero effort from here
+on&hellip;
+
+- Automatically generating caches
+- Speedier service worker startup times ⚡️
+- Improved versioning and security through NPM
+- Increased confidence by removing possibility of human error from the process
+
+At this point, the build could easily be added to continuous integration. Rollup
+could also be run in `--watch` mode during development to automatically rebuild
+on any file changes.
+
+With the caching and service worker powers acquired so far we're finally ready to
+start implementing features to obtain the *ultimate offline experience*.
 
 **Next up:** <a href="/offline-fallback-page.html" class="arrow-link">Offline fallback page &xrarr;</a>
