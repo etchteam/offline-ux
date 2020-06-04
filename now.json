@@ -2,7 +2,12 @@
   "version": 2,
   "builds": [{ "src": "package.json", "use": "@now/static-build" }],
   "routes": [
-    { "src": "/([^\\.\/]+)$", "dest": "/$1.html" },
+    { "src": "/the-ultimate-offline-experience", "dest": "/the-ultimate-offline-experience.html" },
+    { "src": "/offline-fundamentals", "dest": "/offline-fundamentals.html" },
+    { "src": "/versioning-offline-content", "dest": "/versioning-offline-content.html" },
+    { "src": "/offline-workflow", "dest": "/offline-workflow.html" },
+    { "src": "/offline-fallback-page", "dest": "/offline-fallback-page.html" },
+    { "handle": "filesystem" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ]
 }
