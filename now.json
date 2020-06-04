@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [{ "src": "package.json", "use": "@now/static-build" }],
   "routes": [
-    { "src": "/([^\\.]+)", "destination": "/$1.html" },
+    { "src": "/([^\\.]+)", "dest": "/$1.html" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ]
 }
