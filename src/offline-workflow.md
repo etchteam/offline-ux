@@ -315,6 +315,6 @@ could also be run in `--watch` mode during development to automatically rebuild
 on any file changes.
 
 With the caching and service worker powers acquired so far we're finally ready to
-start implementing features to obtain the *ultimate offline experience*.
+start implementing features and functionality to obtain the *ultimate offline experience*.
 
 **Next up:** <a href="/offline-fallback-page.html" class="arrow-link">Offline fallback page &xrarr;</a>
