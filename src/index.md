@@ -17,7 +17,7 @@ layout: default.hbs
     <h2 class="articles__item-title">
       The ultimate offline experience
     </h2>
-    <a href="/the-ultimate-offline-experience.html" class="arrow-link">Read &xrarr;</a>
+    <a href="/the-ultimate-offline-experience" class="arrow-link">Read &xrarr;</a>
   </div>
 
   <div class="articles__item">
@@ -28,7 +28,7 @@ layout: default.hbs
       Even the most basic cache implementation can simultaneously improve
       performance and enable offline use of any website&hellip;
     </p>
-    <a href="/offline-fundamentals.html" class="arrow-link">Read &xrarr;</a>
+    <a href="/offline-fundamentals" class="arrow-link">Read &xrarr;</a>
   </div>
 
   <div class="articles__item">
@@ -39,7 +39,7 @@ layout: default.hbs
       Automate the versioning of your cache to make sure users never see out
       of date content&hellip;
     </p>
-    <a href="/versioning-offline-content.html" class="arrow-link">Read &xrarr;</a>
+    <a href="/versioning-offline-content" class="arrow-link">Read &xrarr;</a>
   </div>
 
   <div class="articles__item">
@@ -50,7 +50,7 @@ layout: default.hbs
       Reduce service worker startup times and automate generating caches at
       build time to avoid manual effort and human error&hellip;
     </p>
-    <a href="/offline-workflow.html" class="arrow-link">Read &xrarr;</a>
+    <a href="/offline-workflow" class="arrow-link">Read &xrarr;</a>
   </div>
 
   <div class="articles__item">
@@ -61,7 +61,7 @@ layout: default.hbs
       Implementing an offline fallback page should be just as essential as including
       a 404 page on your website&hellip;
     </p>
-    <a href="/offline-fallback-page.html" class="arrow-link">Read &xrarr;</a>
+    <a href="/offline-fallback-page" class="arrow-link">Read &xrarr;</a>
   </div>
 
   <div class="articles__item">

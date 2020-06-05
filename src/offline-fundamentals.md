@@ -229,4 +229,4 @@ of production software will be needed.
 This goes beyond a basic cache implementation, the network needs to *enhance*
 the stale contents of the cache to build off this implementation.
 
-**Next up:** <a href="/versioning-offline-content.html" class="arrow-link">Versioning offline content &xrarr;</a>
+**Next up:** <a href="/versioning-offline-content" class="arrow-link">Versioning offline content &xrarr;</a>

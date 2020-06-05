@@ -60,7 +60,7 @@ and fill it with some basic content.
 ```
 
 For the page to be always available offline, it needs to be cached on *install* with
-a "cache first" strategy. We learnt in the [versioning offline content](/versioning-offline-content.html)
+a "cache first" strategy. We learnt in the [versioning offline content](/versioning-offline-content)
 article, the best way to do this kind of caching is the workbox precache.
 
 Workbox CLI uses the `workbox-config.js` to decide which files it's going to precache,

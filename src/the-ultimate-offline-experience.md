@@ -119,4 +119,4 @@ as you might think to implement.
 
 So if you're interested in building better web experiences, let's get started!
 
-**Next up:** <a href="/offline-fundamentals.html" class="arrow-link">Offline fundamentals &xrarr;</a>
+**Next up:** <a href="/offline-fundamentals" class="arrow-link">Offline fundamentals &xrarr;</a>

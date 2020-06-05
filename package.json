@@ -8,7 +8,7 @@
     "mdlint": "markdownlint **/*.md --ignore node_modules",
     "start": "npm-run-all --parallel watch serve",
     "watch": "watch \"npm run build\" src",
-    "serve": "browser-sync start -s 'public' -f 'public'",
+    "serve": "browser-sync start -s 'public' -f 'public' --extensions html",
     "build": "node metalsmith.js"
   },
   "keywords": [],

@@ -23,7 +23,7 @@ and human error**.
 
 ## The current workflow
 
-Using the [implementation so far](/versioning-offline-content.html) we have two problems.
+Using the [implementation so far](/versioning-offline-content) we have two problems.
 
 Firstly, developers have to remember to call `workbox injectManifest` to update
 the precache, every single time. This might not seem like much, but it'd be easy
@@ -317,4 +317,4 @@ on any file changes.
 With the caching and service worker powers acquired so far we're finally ready to
 start implementing features and functionality to obtain the *ultimate offline experience*.
 
-**Next up:** <a href="/offline-fallback-page.html" class="arrow-link">Offline fallback page &xrarr;</a>
+**Next up:** <a href="/offline-fallback-page" class="arrow-link">Offline fallback page &xrarr;</a>

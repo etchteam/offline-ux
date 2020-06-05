@@ -14,7 +14,7 @@ layout: default.hbs
 </p>
 
 There's still lots of holes in the basic implementation provided in the
-[offline fundamentals](/offline-fundamentals.html) article, it would be
+[offline fundamentals](/offline-fundamentals) article, it would be
 tough to manually maintain the cache and avoid it going stale in any but the simplest
 of websites.
 
@@ -27,7 +27,7 @@ frequently updating caches manageable.
 from Google which makes working with caches and service workers easier. To get started
 we're going to move the cache we already have to Workbox.
 
-Here's the existing service worker code from [offline fundamentals](/offline-fundamentals.html)&hellip;
+Here's the existing service worker code from [offline fundamentals](/offline-fundamentals)&hellip;
 
 ```javascript
 const cacheName = 'offline';
@@ -345,4 +345,4 @@ A couple of things are still bugging me, why should we have to remember to run
 URL causing extra unnecessary network requests? Seems like we've still got some
 *workflow improvements* to tighten up!
 
-**Next up:** <a href="/offline-workflow.html" class="arrow-link">Offline workflow &xrarr;</a>
+**Next up:** <a href="/offline-workflow" class="arrow-link">Offline workflow &xrarr;</a>
