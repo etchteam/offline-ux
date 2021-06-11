@@ -2,7 +2,7 @@ pull_request_rules:
   - name: Auto-merge security vulnerabilities when build passes and there are no conflicts
     conditions:
       - and:
-          - author=dependabot
+          - author=github
           - check-success=Vercel
     actions:
       merge:
