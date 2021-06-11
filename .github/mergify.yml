@@ -1,8 +1,8 @@
 pull_request_rules:
-  - name: Auto-merge security vulnerabilities when build passes and there are no conflicts
+  - name: Auto-merge Dependabot pull requests
     conditions:
       - and:
-          - author=github
+          - author~=^dependabot(|-preview)\[bot\]$
           - check-success=Vercel
     actions:
       merge:
