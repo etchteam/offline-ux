@@ -25,6 +25,6 @@
     "workbox-strategies": "5.1.2"
   },
   "dependencies": {
-    "serve": "11.3.0"
+    "serve": "14.0.1"
   }
 }
