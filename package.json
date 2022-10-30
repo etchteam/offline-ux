@@ -33,7 +33,7 @@
     "spellchecker-cli": "4.0.1",
     "watch": "1.0.2",
     "workbox": "0.0.0",
-    "workbox-build": "5.0.0"
+    "workbox-build": "6.5.4"
   },
   "dependencies": {
     "modern-normalize": "0.6.0"
