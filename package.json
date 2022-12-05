@@ -18,7 +18,7 @@
     "browser-sync": "2.27.10",
     "clean-css": "4.2.3",
     "jstransformer-handlebars": "1.1.0",
-    "markdownlint-cli": "0.21.0",
+    "markdownlint-cli": "0.32.2",
     "metalsmith": "2.3.0",
     "metalsmith-clean-css": "6.1.2",
     "metalsmith-html-minifier": "4.0.1",
